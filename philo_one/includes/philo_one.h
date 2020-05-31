@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 14:52:41 by blacking          #+#    #+#             */
-/*   Updated: 2020/05/31 14:58:54 by blacking         ###   ########.fr       */
+/*   Updated: 2020/05/31 16:47:37 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct	s_waiter
 	int	nthread;
 	int	tdie;
 	int	teat;
-	int pnum;
+	void *id;
 }				t_waiter;
 
 #endif
