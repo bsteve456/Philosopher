@@ -4,15 +4,9 @@ void	*dinner(void *arg)
 {
 	t_waiter *waiter;
 	static int time = 0;
-//	int *fork = 0;
-//	int *tdie = 0;
-//	int *nb_eat = 0;
 	int num = 0;
-	waiter = arg;
-//	fork = ft_fork(waiter);
-//	tdie = ft_tdie(waiter);
-//	nb_eat = ft_nb_eat(waiter);
 
+	waiter = arg;
 	waiter->tdie2[(intptr_t)waiter->id] = (intptr_t)waiter->id;
 	usleep(10);
 	while(num < waiter->nthread)
@@ -38,9 +32,7 @@ void	*dinner(void *arg)
 int main(int ac, char **av)
 {
 	t_waiter *waiter;
-	int *fork;
-	int *nb_eat;
-	int *tdie;
+	int **tab;
 	int i;
 	pthread_t *tid;
 
@@ -49,24 +41,10 @@ int main(int ac, char **av)
 	{
 		if (!(tid = (pthread_t *)malloc(sizeof(pthread_t) * atoi(av[1]) + 1)))
 			return (0);
-		fork = ft_fork(atoi(av[1]));
-		tdie = ft_tdie(atoi(av[1]), atoi(av[2]));
-		nb_eat = ft_nb_eat(atoi(av[1]));
+		tab = init_tab(av);
 		while(i < atoi(av[1]))
 		{
-			if(!(waiter = (t_waiter *)malloc(sizeof(t_waiter) * atoi(av[1]) + 1)))
-				return (0);
-			waiter->nthread = atoi(av[1]);
-			waiter->tdie = atoi(av[2]);
-			waiter->teat = atoi(av[3]);
-			waiter->fork = fork;
-			waiter->tdie2 = tdie;
-			waiter->nb_eat = nb_eat;
-			if(ac == 5)
-				waiter->ntoeat = atoi(av[4]);
-			else
-				waiter->ntoeat = -1;
-			waiter->id = (void *)(intptr_t) i;
+			waiter = init_waiter(av, tab, i, ac);
 			pthread_create(&tid[i], NULL, &dinner, (void *)(waiter));
 			i++;
 		}
