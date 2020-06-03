@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/03 16:37:32 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/03 17:16:02 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ t_waiter *init_waiter(char **av, int **tab, int i, int ac)
 		waiter->ntoeat = atoi(av[4]);
 	else
 		waiter->ntoeat = -1;
-	waiter->id = (void *)(intptr_t) i;
+	waiter->id = (void *)(intptr_t)(i + 1);
 	return (waiter);
 }

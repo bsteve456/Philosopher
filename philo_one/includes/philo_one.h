@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 14:52:41 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/03 17:07:02 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/03 17:49:15 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ int			*ft_nb_eat(int nthread);
 int			**init_tab(char **av);
 t_waiter	*init_waiter(char **av, int **tab, int i, int ac);
 int			check_state(t_waiter *waiter, int time);
+int			ft_check_fork(t_waiter *waiter);
 #endif
