@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/03 17:50:01 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/03 23:22:42 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	ft_check_fork(t_waiter *waiter)
 	if (id == 1 && (waiter->fork[last_id] == 1 &&
 		waiter->fork[id - 1] == 1))
 		return (1);
-	else if (fork[id - 2] == 1 && fork[id - 1] == 1)
+	else if (id != 1 && fork[id - 2] == 1 && fork[id - 1] == 1)
 		return (1);
 	return (0);
 }
