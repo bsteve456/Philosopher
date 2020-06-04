@@ -27,14 +27,17 @@ void	*dinner(void *arg)
 /*		pthread_mutex_lock (&mutex_time);
 		time++;
 		pthread_mutex_unlock (&mutex_time);*/
-		usleep(100);
+//		usleep(1000);
 		if (check_state(waiter, time) == 1)
 			break;
+		usleep(100);
+		pthread_mutex_lock (&mutex_fork);
 		if(ft_check_fork(waiter) == 1)
 		{
-			pthread_mutex_lock (&mutex_fork);
-			printf("%d  philosopher : %d takes a fork\n", time, id);
-			printf("%d  philosopher : %d takes a fork\n", time, id);
+			waiter->last_eat[id - 1] = time;
+//			pthread_mutex_lock (&mutex_fork);
+			printf("%d  philosopher : %d takes a fork\n", waiter->last_eat[id - 1], id);
+			printf("%d  philosopher : %d takes a fork\n", waiter->last_eat[id - 1], id);
 			if (id == 1)
 			{
 				waiter->fork[waiter->nthread - 1] = 0;
@@ -45,7 +48,9 @@ void	*dinner(void *arg)
 				waiter->fork[id - 2] = 0;
 				waiter->fork[id - 1] = 0;
 			}
-			printf("%d  philosopher : %d is eating\n", time, id);
+			waiter->tdie2[id - 1] = waiter->tdie;
+			waiter->nb_eat += 1;
+			printf("%d  philosopher : %d is eating\n", waiter->last_eat[id - 1], id);
 			usleep(waiter->teat);
 			if (id == 1)
 			{
@@ -57,24 +62,30 @@ void	*dinner(void *arg)
 				waiter->fork[id - 2] = 1;
 				waiter->fork[id - 1] = 1;
 			}
-			pthread_mutex_unlock (&mutex_fork);
-			waiter->tdie2[id - 1] = waiter->tdie + 1;
-			waiter->nb_eat += 1;
+//			pthread_mutex_unlock (&mutex_fork);
+			time += waiter->teat;
+			waiter->tdie2[id - 1] -= waiter->teat;
 			if (check_state(waiter, time) == 1)
 				break;
-			printf("%d  philosopher : %d is sleeping\n", time, id);
+			printf("%d  philosopher : %d is sleeping\n", waiter->last_eat[id - 1] + waiter->teat, id);
 			usleep(waiter->tsleep);
+			time += waiter->tsleep;
+			waiter->tdie2[id - 1] -= (waiter->tsleep);
 			if (check_state(waiter, time) == 1)
 				break;
-			printf("%d  philosopher : %d is thinking\n", time, id);
+			printf("%d  philosopher : %d is thinking\n", waiter->last_eat[id - 1] + waiter->teat + waiter->tsleep, id);
 		}
-			waiter->tdie2[id - 1] -= 1;
-			usleep(100);
-			if (check_state(waiter, time) == 1)
-				break;
+			pthread_mutex_unlock (&mutex_fork);
 			pthread_mutex_lock (&mutex_time);
 			time++;
 			pthread_mutex_unlock (&mutex_time);
+			waiter->tdie2[id - 1] -= (time - waiter->last_eat[id - 1]);
+//			printf("tdie :%d, id : %d\n", waiter->tdie2[id - 1], id);
+		usleep(100);
+			if (check_state(waiter, time) == 1)
+				break;
+	//		usleep(1000);
+
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 15:17:12 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/02 16:57:09 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/04 18:53:09 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,20 @@ int *ft_nb_eat(int nthread)
 		i++;
 	}
 	return (nb_eat);
+}
+
+int *ft_last_eat(int nthread)
+{
+	int *last_eat = NULL;
+	int i;
+
+	if(!(last_eat = (int *)malloc(sizeof(int) * nthread)))
+		return (0);
+	i = 0;
+	while(i < nthread)
+	{
+		last_eat[i] = 0;
+		i++;
+	}
+	return (last_eat);
 }

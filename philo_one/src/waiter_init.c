@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/04 16:44:12 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/04 18:42:10 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ int		**init_tab(char **av)
 {
 	int **res;
 
-	if(!(res = (int **)malloc(sizeof(int *) * 3)))
+	if(!(res = (int **)malloc(sizeof(int *) * 4)))
 		return (0);
 	res[0] = ft_fork(atoi(av[1]));
 	res[1] = ft_tdie(atoi(av[1]), atoi(av[2]));
 	res[2] = ft_nb_eat(atoi(av[1]));
+	res[3] = ft_last_eat(atoi(av[1]));
 	return (res);
 }
 
@@ -37,6 +38,7 @@ t_waiter *init_waiter(char **av, int **tab, int i, int ac)
 	waiter->fork = tab[0];
 	waiter->tdie2 = tab[1];
 	waiter->nb_eat = tab[2];
+	waiter->last_eat = tab[3];
 	if(ac == 6)
 		waiter->ntoeat = atoi(av[5]);
 	else
