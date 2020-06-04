@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/03 23:22:42 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/04 17:05:50 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	philo_state(t_waiter *waiter, int time)
 
 int	check_state(t_waiter *waiter, int time)
 {
-	if (check_philo(waiter, time) == 0 ||
+	if (philo_state(waiter, time) == 0 ||
 		nb_eat(waiter) == 1)
 		return (1);
 	else
@@ -74,10 +74,14 @@ int	ft_check_fork(t_waiter *waiter)
 
 	id = (intptr_t)(waiter->id);
 	last_id = waiter->nthread;
-	if (id == 1 && (waiter->fork[last_id] == 1 &&
+	if (id == 1 && (waiter->fork[last_id - 1] == 1 &&
 		waiter->fork[id - 1] == 1))
+	{
+//		printf("yes\n");
 		return (1);
-	else if (id != 1 && fork[id - 2] == 1 && fork[id - 1] == 1)
+	}
+	else if (id != 1 && waiter->fork[id - 2] == 1 && waiter->fork[id - 1] == 1)
 		return (1);
+//	printf("no\n");
 	return (0);
 }

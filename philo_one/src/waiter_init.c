@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/03 17:16:02 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/04 16:44:12 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ t_waiter *init_waiter(char **av, int **tab, int i, int ac)
 	waiter->nthread = atoi(av[1]);
 	waiter->tdie = atoi(av[2]);
 	waiter->teat = atoi(av[3]);
+	waiter->tsleep = atoi(av[4]);
 	waiter->fork = tab[0];
 	waiter->tdie2 = tab[1];
 	waiter->nb_eat = tab[2];
-	if(ac == 5)
-		waiter->ntoeat = atoi(av[4]);
+	if(ac == 6)
+		waiter->ntoeat = atoi(av[5]);
 	else
 		waiter->ntoeat = -1;
 	waiter->id = (void *)(intptr_t)(i + 1);
