@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/04 17:05:50 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/04 17:21:54 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	philo_state(t_waiter *waiter, int time)
 	id = (intptr_t)(waiter->id);
 	if (waiter->tdie2[id - 1] <= 0)
 	{
-		printf("%d : philo [%d] died\n", time, id);
+		printf("%d philosopher : %d died\n", time, id);
 		return (0);
 	}
 	else if (check_other_philo(waiter) == 1)
