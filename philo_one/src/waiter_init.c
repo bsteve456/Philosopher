@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/08 15:17:48 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/08 21:11:31 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ pthread_mutex_t *init_mutex(int n)
 	int i;
 
 	i = 0;
+	if(n == 1)
+		n++;
 	if(!(res = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * n + 1)))
 		return (NULL);
 	while(i < n)

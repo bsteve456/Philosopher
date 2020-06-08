@@ -17,7 +17,6 @@ void	*dinner(void *arg)
 		usleep(1000);
 		if(ft_check_die_eat(waiter, time, 1) == 1)
 			break;
-	//	usleep(100);
 		printf("%d %d has taken a fork\n", time, waiter->id);
 		fn = fork_number(waiter->id, 2, waiter->nthread);
 		pthread_mutex_lock(&(waiter->fork[fn]));
@@ -28,7 +27,6 @@ void	*dinner(void *arg)
 		printf("%d %d has taken a fork\n", time, waiter->id);
 		waiter->last_eat[waiter->id - 1] = time;
 		printf("%d %d is eating\n", waiter->last_eat[waiter->id - 1], waiter->id);
-	//	usleep(100);
 		waiter->tdie2[waiter->id - 1] = waiter->tdie;
 		waiter->nb_eat[waiter->id - 1] += 1;
 		fn = fork_number(waiter->id, 1, waiter->nthread);
@@ -63,20 +61,23 @@ int main(int ac, char **av)
 	i = 0;
 	if(ac >= 5)
 	{
-		if (!(tid = (pthread_t *)malloc(sizeof(pthread_t) * atoi(av[1]) + 1)))
-			return (0);
-		tab = init_tab(av);
-		while(i < atoi(av[1]))
+		if(atoi(av[1]) > 0)
 		{
-			waiter = init_waiter(av, tab, i, ac);
-			pthread_create(&tid[i], NULL, &dinner, (void *)(waiter));
-			i++;
-		}
-		i = 0;
-		while(i < atoi(av[1]))
-		{
-			pthread_join(tid[i], NULL);
-			i++;
+			if (!(tid = (pthread_t *)malloc(sizeof(pthread_t) * atoi(av[1]) + 1)))
+				return (0);
+			tab = init_tab(av);
+			while(i < atoi(av[1]))
+			{
+				waiter = init_waiter(av, tab, i, ac);
+				pthread_create(&tid[i], NULL, &dinner, (void *)(waiter));
+				i++;
+			}
+			i = 0;
+			while(i < atoi(av[1]))
+			{
+				pthread_join(tid[i], NULL);
+				i++;
+			}
 		}
 	}
 	return (0);
