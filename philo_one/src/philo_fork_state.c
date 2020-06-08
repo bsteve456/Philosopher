@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/08 15:41:56 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/08 16:16:11 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int nb_eat(t_waiter *waiter)
 		return (0);
 	while (i < waiter->nthread)
 	{
-		if (waiter->nb_eat[i] != waiter->ntoeat)
+		if (waiter->nb_eat[i] < waiter->ntoeat)
 			return (0);
 		i++;
 	}

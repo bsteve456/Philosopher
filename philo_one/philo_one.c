@@ -29,7 +29,7 @@ void	*dinner(void *arg)
 		waiter->last_eat[waiter->id - 1] = time;
 	//	usleep(100);
 		waiter->tdie2[waiter->id - 1] = waiter->tdie;
-		printf("%d %d is eating\n", waiter->last_eat[waiter->id - 1], waiter->id);
+		waiter->nb_eat[waiter->id - 1] += 1;
 		fn = fork_number(waiter->id, 2, waiter->nthread);
 		pthread_mutex_unlock(&(waiter->fork[fn]));
 		fn = fork_number(waiter->id, 1, waiter->nthread);
