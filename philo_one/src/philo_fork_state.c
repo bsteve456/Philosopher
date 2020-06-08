@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/08 15:08:10 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/08 15:41:56 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ int	ft_check_die_eat(t_waiter *waiter, int time, int pos)
 	id = (intptr_t)(waiter->id);
 	last_id = waiter->nthread;
 	fork_n = fork_number(id, pos, last_id);
-	if(check_state(waiter, time) == 1 && pos == 1)
+	if(pos == 1 && check_state(waiter, time) == 1)
 	{
 		pthread_mutex_unlock(&(waiter->fork)[fork_n]);
 		return(1);
 	}
-	else if(check_state(waiter, time) == 1 && pos == 2)
+	else if(pos == 2 && check_state(waiter, time) == 1)
 	{
 		pthread_mutex_unlock(&(waiter->fork)[fork_n]);
 		fork_n = fork_number(id, 1, last_id);
