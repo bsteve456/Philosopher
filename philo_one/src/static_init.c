@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 15:17:12 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/04 18:53:09 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/08 14:26:39 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,16 @@ int *ft_last_eat(int nthread)
 		i++;
 	}
 	return (last_eat);
+}
+
+int	fork_number(int id, int pos, int last)
+{
+	if(id == last && pos == 1)
+		return (0);
+	else if(id == last && pos == 2)
+		return (last - 1);
+	else if(pos == 1)
+		return (id - 1);
+	else
+		return (id);
 }

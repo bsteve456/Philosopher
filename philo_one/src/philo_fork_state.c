@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/04 17:21:54 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/08 15:08:10 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	philo_state(t_waiter *waiter, int time)
 	id = (intptr_t)(waiter->id);
 	if (waiter->tdie2[id - 1] <= 0)
 	{
-		printf("%d philosopher : %d died\n", time, id);
+		printf("%d %d died\n", time, id);
 		return (0);
 	}
 	else if (check_other_philo(waiter) == 1)
@@ -67,21 +67,30 @@ int	check_state(t_waiter *waiter, int time)
 		return (0);
 }
 
-int	ft_check_fork(t_waiter *waiter)
+int	ft_check_die_eat(t_waiter *waiter, int time, int pos)
 {
 	int id;
 	int last_id;
+	int fork_n;
 
 	id = (intptr_t)(waiter->id);
 	last_id = waiter->nthread;
-	if (id == 1 && (waiter->fork[last_id - 1] == 1 &&
-		waiter->fork[id - 1] == 1))
+	fork_n = fork_number(id, pos, last_id);
+	if(check_state(waiter, time) == 1 && pos == 1)
 	{
-//		printf("yes\n");
+		pthread_mutex_unlock(&(waiter->fork)[fork_n]);
+		return(1);
+	}
+	else if(check_state(waiter, time) == 1 && pos == 2)
+	{
+		pthread_mutex_unlock(&(waiter->fork)[fork_n]);
+		fork_n = fork_number(id, 1, last_id);
+		pthread_mutex_unlock(&(waiter->fork)[fork_n]);
 		return (1);
 	}
-	else if (id != 1 && waiter->fork[id - 2] == 1 && waiter->fork[id - 1] == 1)
+	else if(check_state(waiter, time) == 1)
 		return (1);
-//	printf("no\n");
 	return (0);
+	
+
 }

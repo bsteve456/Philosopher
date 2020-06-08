@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 14:52:41 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/04 18:43:37 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/08 15:15:09 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ typedef struct	s_waiter
 	int	teat;
 	int tsleep;
 	int ntoeat;
-	int *fork;
+//	int *fork;
 	int *tdie2;
 	int *nb_eat;
 	int *last_eat;
-	void *id;
+	pthread_mutex_t *fork;
+	int id;
 }				t_waiter;
 int			*ft_fork(int nthread);
 int			*ft_tdie(int nthread, int tdie);
@@ -37,5 +38,6 @@ int			*ft_last_eat(int nthread);
 int			**init_tab(char **av);
 t_waiter	*init_waiter(char **av, int **tab, int i, int ac);
 int			check_state(t_waiter *waiter, int time);
-int			ft_check_fork(t_waiter *waiter);
+int			ft_check_die_eat(t_waiter *waiter, int time, int pos);
+int			fork_number(int id, int pos, int last);
 #endif
