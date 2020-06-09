@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/09 15:52:21 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/09 16:18:23 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	check_state(t_waiter *waiter, int time)
 		return (0);
 }
 
-int	ft_check_die_eat(t_waiter *waiter, int time, int pos, int slep)
+int	check_die_eat(t_waiter *waiter, int time, int pos, int slep)
 {
 	int id;
 	int last_id;

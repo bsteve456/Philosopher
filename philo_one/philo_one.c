@@ -1,6 +1,6 @@
 #include "philo_one.h"
 
-void	fork_lock_unlock(t_waiter *waiter, int pos, int lock)
+int	fork_lock_unlock(t_waiter *waiter, int pos, int lock, int time)
 {
 	int fn;
 
@@ -8,11 +8,13 @@ void	fork_lock_unlock(t_waiter *waiter, int pos, int lock)
 	{
 		fn = fork_number(waiter->id, 1, waiter->nthread);
 		pthread_mutex_lock(&(waiter->fork[fn]));
+		return (check_die_eat(waiter, time, 1, 1));
 	}
 	else if(lock == 1 && pos == 2)
 	{
 		fn = fork_number(waiter->id, 2, waiter->nthread);
 		pthread_mutex_lock(&(waiter->fork[fn]));
+		return (check_die_eat(waiter, time, 2, 1));
 	}
 	else if(lock == 0)
 	{
@@ -22,49 +24,37 @@ void	fork_lock_unlock(t_waiter *waiter, int pos, int lock)
 		pthread_mutex_unlock(&(waiter->fork[fn]));
 		fn = fork_number(waiter->id, 2, waiter->nthread);
 		pthread_mutex_unlock(&(waiter->fork[fn]));
+		return (0);
 	}
+	return (0);
 }
 
 void	*dinner(void *arg)
 {
 	t_waiter *waiter;
 	static int time = 0;
-//	int fn;
 
 	waiter = arg;
 	printf("%d %d is thinking\n", 0, waiter->id);
 	while(1)
 	{
-//		fn = fork_number(waiter->id, 1, waiter->nthread);
-//		pthread_mutex_lock(&(waiter->fork[fn]));
-		fork_lock_unlock(waiter, 1, 1);
-		if(ft_check_die_eat(waiter, time, 1, 1) == 1)
+		if(fork_lock_unlock(waiter, 1, 1, time) == 1)
 			break;
 		printf("%d %d has taken a fork\n", time, waiter->id);
-//		fn = fork_number(waiter->id, 2, waiter->nthread);
-//		pthread_mutex_lock(&(waiter->fork[fn]));
-		fork_lock_unlock(waiter, 2, 1);
-		if(ft_check_die_eat(waiter, time, 2, 1) == 1)
+		if(fork_lock_unlock(waiter, 2, 1, time))
 			break;
 		waiter->last_eat[waiter->id - 1] = time;
 		printf("%d %d has taken a fork\n", waiter->last_eat[waiter->id - 1], waiter->id);
 		printf("%d %d is eating\n", waiter->last_eat[waiter->id - 1], waiter->id);
-//		waiter->tdie2[waiter->id - 1] = waiter->tdie;
-//		waiter->nb_eat[waiter->id - 1] += 1;
-//		fn = fork_number(waiter->id, 1, waiter->nthread);
-//		pthread_mutex_unlock(&(waiter->fork[fn]));
-//		fn = fork_number(waiter->id, 2, waiter->nthread);
-//		pthread_mutex_unlock(&(waiter->fork[fn]));
-		fork_lock_unlock(waiter, 0, 0);
+		fork_lock_unlock(waiter, 0, 0, time);
 		time += (waiter->last_eat[waiter->id - 1] + waiter->teat - time);
-		if(ft_check_die_eat(waiter, time, 0, waiter->teat) == 1)
+		if(check_die_eat(waiter, time, 0, waiter->teat) == 1)
 			break;
 		printf("%d %d is sleeping\n", waiter->last_eat[waiter->id - 1] + waiter->teat, waiter->id);
 		time += (waiter->last_eat[waiter->id - 1] + waiter->teat + waiter->tsleep - time);
-		if(ft_check_die_eat(waiter, time, 0, waiter->tsleep) == 1)
+		if(check_die_eat(waiter, time, 0, waiter->tsleep) == 1)
 			break;
 		printf("%d %d is thinking\n",waiter->last_eat[waiter->id - 1] + waiter->teat + waiter->tsleep, waiter->id);
-
 	}
 	return (NULL);
 }

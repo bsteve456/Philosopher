@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 14:52:41 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/09 15:52:47 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/09 16:18:33 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ int			*ft_last_eat(int nthread);
 int			**init_tab(char **av);
 t_waiter	*init_waiter(char **av, int **tab, int i, int ac);
 int			check_state(t_waiter *waiter, int time);
-int			ft_check_die_eat(t_waiter *waiter, int time, int pos, int slep);
+int			check_die_eat(t_waiter *waiter, int time, int pos, int slep);
 int			fork_number(int id, int pos, int last);
 #endif
