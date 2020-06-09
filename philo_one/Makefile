@@ -6,7 +6,7 @@
 #    By: stbaleba <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/12 17:55:40 by stbaleba          #+#    #+#              #
-#    Updated: 2020/06/03 16:46:29 by blacking         ###   ########.fr        #
+#    Updated: 2020/06/09 17:28:22 by blacking         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ INC= -Iincludes
 FILES=philo_one.c \
 		src/static_init.c \
 		src/waiter_init.c \
-		src/philo_fork_state.c
+		src/philo_fork_state.c \
+		src/philo_utils.c
 OBJ=$(FILES:.c=.o)
 
 all:$(NAME)
