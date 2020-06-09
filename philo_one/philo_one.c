@@ -1,33 +1,61 @@
 #include "philo_one.h"
 
-void	*dinner(void *arg)
+void	fork_lock_unlock(t_waiter *waiter, int pos, int lock)
 {
-	t_waiter *waiter;
-	static int time = 0;
 	int fn;
 
-	waiter = arg;
-	printf("%d %d is thinking\n", 0, waiter->id);
-	while(1)
+	if(lock == 1 && pos == 1)
 	{
 		fn = fork_number(waiter->id, 1, waiter->nthread);
 		pthread_mutex_lock(&(waiter->fork[fn]));
-		if(ft_check_die_eat(waiter, time, 1, 1) == 1)
-			break;
-		printf("%d %d has taken a fork\n", time, waiter->id);
+	}
+	else if(lock == 1 && pos == 2)
+	{
 		fn = fork_number(waiter->id, 2, waiter->nthread);
 		pthread_mutex_lock(&(waiter->fork[fn]));
-		if(ft_check_die_eat(waiter, time, 2, 1) == 1)
-			break;
-		waiter->last_eat[waiter->id - 1] = time;
-		printf("%d %d has taken a fork\n", waiter->last_eat[waiter->id - 1], waiter->id);
-		printf("%d %d is eating\n", waiter->last_eat[waiter->id - 1], waiter->id);
+	}
+	else if(lock == 0)
+	{
 		waiter->tdie2[waiter->id - 1] = waiter->tdie;
 		waiter->nb_eat[waiter->id - 1] += 1;
 		fn = fork_number(waiter->id, 1, waiter->nthread);
 		pthread_mutex_unlock(&(waiter->fork[fn]));
 		fn = fork_number(waiter->id, 2, waiter->nthread);
 		pthread_mutex_unlock(&(waiter->fork[fn]));
+	}
+}
+
+void	*dinner(void *arg)
+{
+	t_waiter *waiter;
+	static int time = 0;
+//	int fn;
+
+	waiter = arg;
+	printf("%d %d is thinking\n", 0, waiter->id);
+	while(1)
+	{
+//		fn = fork_number(waiter->id, 1, waiter->nthread);
+//		pthread_mutex_lock(&(waiter->fork[fn]));
+		fork_lock_unlock(waiter, 1, 1);
+		if(ft_check_die_eat(waiter, time, 1, 1) == 1)
+			break;
+		printf("%d %d has taken a fork\n", time, waiter->id);
+//		fn = fork_number(waiter->id, 2, waiter->nthread);
+//		pthread_mutex_lock(&(waiter->fork[fn]));
+		fork_lock_unlock(waiter, 2, 1);
+		if(ft_check_die_eat(waiter, time, 2, 1) == 1)
+			break;
+		waiter->last_eat[waiter->id - 1] = time;
+		printf("%d %d has taken a fork\n", waiter->last_eat[waiter->id - 1], waiter->id);
+		printf("%d %d is eating\n", waiter->last_eat[waiter->id - 1], waiter->id);
+//		waiter->tdie2[waiter->id - 1] = waiter->tdie;
+//		waiter->nb_eat[waiter->id - 1] += 1;
+//		fn = fork_number(waiter->id, 1, waiter->nthread);
+//		pthread_mutex_unlock(&(waiter->fork[fn]));
+//		fn = fork_number(waiter->id, 2, waiter->nthread);
+//		pthread_mutex_unlock(&(waiter->fork[fn]));
+		fork_lock_unlock(waiter, 0, 0);
 		time += (waiter->last_eat[waiter->id - 1] + waiter->teat - time);
 		if(ft_check_die_eat(waiter, time, 0, waiter->teat) == 1)
 			break;
