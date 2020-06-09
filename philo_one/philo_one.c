@@ -75,15 +75,11 @@ int main(int ac, char **av)
 		while(i < atoi(av[1]))
 		{
 			waiter = init_waiter(av, tab, i, ac);
-			pthread_create(&tid[i], NULL, &dinner, (void *)(waiter));
-			i++;
+			pthread_create(&tid[i++], NULL, &dinner, (void *)(waiter));
 		}
 		i = 0;
 		while(i < atoi(av[1]))
-		{
-			pthread_join(tid[i], NULL);
-			i++;
-		}
+			pthread_join(tid[i++], NULL);
 	}
 	return (0);
 }
