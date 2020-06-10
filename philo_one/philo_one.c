@@ -35,6 +35,7 @@ void	*dinner(void *arg)
 	static int time = 0;
 
 	waiter = arg;
+	ft_display(waiter, 4, 0);
 	while(1)
 	{
 		if(fork_lock_unlock(waiter, 1, 1, time) == 1)
