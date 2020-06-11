@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:26:27 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/09 17:43:28 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/11 16:43:35 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void	ft_display(t_waiter *waiter, int n, int time)
 	}
 	else if (n == 3)
 		display2(last_eat + teat, id, 3);
+	else if (n == 4 && time == 0)
+		display2(time, id, 4);
 	else
 		display2(last_eat + teat + tsleep, id, 4);
 	pthread_mutex_unlock(&display);
