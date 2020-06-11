@@ -2,35 +2,15 @@
 
 int	fork_lock_unlock(t_waiter *waiter, int pos, int lock, int time)
 {
-//	int fn;
-
-//	int n;
-
-//	sem_getvalue(waiter->fork, &n);
-//	ft_putnbr(n);
-//	printf("n : [%d]\n", n);
-	if(lock == 1 && pos == 1)
+	if(lock == 1 && pos == 2)
 	{
-	//	fn = fork_number(waiter->id, 1, waiter->nthread);
-	//	pthread_mutex_lock(&(waiter->fork[fn]));
 		sem_wait(waiter->fork);
-		return (check_die_eat(waiter, time, 1, 1));
-	}
-	else if(lock == 1 && pos == 2)
-	{
-//		fn = fork_number(waiter->id, 2, waiter->nthread);
-//		pthread_mutex_lock(&(waiter->fork[fn]));
 		sem_wait(waiter->fork);
 		return (check_die_eat(waiter, time, 2, 1));
 	}
 	else if(lock == 0)
 	{
 		waiter->tdie2[waiter->id - 1] = waiter->tdie;
-/*		waiter->nb_eat[waiter->id - 1] += 1;
-		fn = fork_number(waiter->id, 1, waiter->nthread);
-		pthread_mutex_unlock(&(waiter->fork[fn]));
-		fn = fork_number(waiter->id, 2, waiter->nthread);
-		pthread_mutex_unlock(&(waiter->fork[fn]));*/
 		sem_post(waiter->fork);
 		sem_post(waiter->fork);
 		return (0);
@@ -47,12 +27,11 @@ void	*dinner(void *arg)
 	ft_display(waiter, 4, 0);
 	while(1)
 	{
-		if(fork_lock_unlock(waiter, 1, 1, time) == 1)
-			break;
-		ft_display(waiter, 1, time);
-		if(fork_lock_unlock(waiter, 2, 1, time))
+		usleep(1000 * (waiter->id));
+		if(fork_lock_unlock(waiter, 2, 1, time) == 1)
 			break;
 		waiter->last_eat[waiter->id - 1] = time;
+		ft_display(waiter, 1, time);
 		ft_display(waiter, 2, time);
 		fork_lock_unlock(waiter, 0, 0, time);
 		time += (waiter->last_eat[waiter->id - 1] + waiter->teat - time);
@@ -81,7 +60,6 @@ int main(int ac, char **av)
 	{
 		sem_unlink("/display");
 		sem_unlink("/forks");
-
 		display = init_sem(1, "/display");
 		fork = init_sem(ft_atoi(av[1]), "/forks");
 		if (!(tid = (pthread_t *)malloc(sizeof(pthread_t) * ft_atoi(av[1]) + 1)))
