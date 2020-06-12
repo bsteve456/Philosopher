@@ -11,6 +11,7 @@ int	fork_lock_unlock(t_waiter *waiter, int pos, int lock, int time)
 	else if(lock == 0)
 	{
 		waiter->tdie2[waiter->id - 1] = waiter->tdie;
+		waiter->nb_eat[waiter->id - 1] += 1;
 		sem_post(waiter->fork);
 		sem_post(waiter->fork);
 		return (0);
