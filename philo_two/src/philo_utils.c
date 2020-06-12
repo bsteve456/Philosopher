@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:26:27 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/12 12:11:12 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/12 17:41:44 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ void	ft_display(t_waiter *waiter, int n, int time)
 	else if (n == 4 && time == 0)
 		display2(time, id, 4);
 	else
+	{
 		display2(last_eat + teat + tsleep, id, 4);
+		waiter->last_eat[id - 1] += (teat + tsleep);
+	}
 	sem_post(waiter->display);
 }

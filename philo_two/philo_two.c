@@ -34,8 +34,10 @@ void	*dinner(void *arg)
 		waiter->last_eat[waiter->id - 1] = time;
 		ft_display(waiter, 1, time);
 		ft_display(waiter, 2, time);
-		fork_lock_unlock(waiter, 0, 0, time);
+//		fork_lock_unlock(waiter, 0, 0, time);
 		time += (waiter->last_eat[waiter->id - 1] + waiter->teat - time);
+		fork_lock_unlock(waiter, 0, 0, time);
+
 		if(check_die_eat(waiter, time, 0, waiter->teat) == 1)
 			break;
 		ft_display(waiter, 3, time);
