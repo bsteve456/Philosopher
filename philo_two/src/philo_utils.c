@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:26:27 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/11 18:02:27 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/12 12:11:12 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,8 @@ void	ft_display(t_waiter *waiter, int n, int time)
 	int 	last_eat;
 	int 	teat;
 	int 	tsleep;
-//	int n1;
-//	static	pthread_mutex_t display = PTHREAD_MUTEX_INITIALIZER;
-	
-//	pthread_mutex_lock(&display);
-//	sem_getvalue(waiter->display, &n1);
-//	printf("sem value :[%d] id : [%d]\n", n1, waiter->id);
-//	ft_putnbr(n1);
-//	write(1, "\n", 2);
+
 	sem_wait(waiter->display);
-//	sem_wait(waiter->display);
 	id = (intptr_t)(waiter->id);
 	last_eat = waiter->last_eat[id - 1];
 	teat = waiter->teat;
@@ -109,19 +101,9 @@ void	ft_display(t_waiter *waiter, int n, int time)
 	}
 	else if (n == 3)
 		display2(last_eat + teat, id, 3);
-	else if(n == 4 && time == 0)
+	else if (n == 4 && time == 0)
 		display2(time, id, 4);
 	else
 		display2(last_eat + teat + tsleep, id, 4);
-//	sem_getvalue(waiter->display, &n1);
-///	printf("sem value :[%d] id : [%d]\n", n1, waiter->id);
-//	ft_putnbr(n1);
-//	write(1, "\n", 2);
-//	pthread_mutex_unlock(&display)
 	sem_post(waiter->display);
-//	sem_getvalue(waiter->display, &n1);
-//	ft_putnbr(n1);
-//	write(1, "\n", 2);
-
-//	sem_post(waiter->display);
 }

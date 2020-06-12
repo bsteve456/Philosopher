@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/11 18:01:03 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/12 12:10:03 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ sem_t		*init_sem(int n, char *str)
 	if (n == 1 && *(str + 1) == 'f')
 		n++;
 	res = sem_open(str, O_CREAT, S_IRWXU, n);
-//	sem_unlink(str);
-//	res = sem_open(str, O_CREAT, S_IRWXU, n);
 	return (res);
 }
 
@@ -40,11 +38,7 @@ int			**init_tab(char **av)
 t_waiter	*init_waiter(char **av, int **tab, int i, int ac)
 {
 	t_waiter *waiter;
-//	sem_t *fork;
-//	sem_t *display;
 
-//	fork = init_sem(ft_atoi(av[1]), "/forks");
-//	display = init_sem(1, "/display");
 	if (!(waiter = (t_waiter *)malloc(sizeof(t_waiter) * ft_atoi(av[1]) + 1)))
 		return (0);
 	waiter->nthread = ft_atoi(av[1]);
@@ -54,8 +48,6 @@ t_waiter	*init_waiter(char **av, int **tab, int i, int ac)
 	waiter->tdie2 = tab[1];
 	waiter->nb_eat = tab[2];
 	waiter->last_eat = tab[3];
-//	waiter->fork = fork;
-//	waiter->display = display;
 	if(ac == 6)
 		waiter->ntoeat = ft_atoi(av[5]);
 	else

@@ -46,30 +46,39 @@ void	*dinner(void *arg)
 	return (NULL);
 }
 
+sem_t **init_semtab(char **av)
+{
+	sem_t **tab;
+
+	sem_unlink("/display");
+	sem_unlink("/forks");
+	if(!(tab = (sem_t **)malloc(sizeof(sem_t *) * 2)))
+		return (0);
+	tab[0] = init_sem(ft_atoi(av[1]), "/forks");
+	tab[1] = init_sem(1, "/display");
+	return (tab);
+}
+
 int main(int ac, char **av)
 {
 	t_waiter *waiter;
 	int **tab;
 	int i;
-	sem_t *display;
-	sem_t *fork;
+	sem_t **sem_tab;
 	pthread_t *tid;
 
 	i = 0;
 	if(ac >= 5 && ft_atoi(av[1]) > 0)
 	{
-		sem_unlink("/display");
-		sem_unlink("/forks");
-		display = init_sem(1, "/display");
-		fork = init_sem(ft_atoi(av[1]), "/forks");
+		sem_tab = init_semtab(av);
 		if (!(tid = (pthread_t *)malloc(sizeof(pthread_t) * ft_atoi(av[1]) + 1)))
 			return (0);
 		tab = init_tab(av);
 		while(i < ft_atoi(av[1]))
 		{
 			waiter = init_waiter(av, tab, i, ac);
-			waiter->display = display;
-			waiter->fork = fork;
+			waiter->display = sem_tab[1];
+			waiter->fork = sem_tab[0];
 			pthread_create(&tid[i++], NULL, &dinner, (void *)(waiter));
 		}
 		i = 0;
