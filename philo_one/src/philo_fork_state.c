@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/09 16:18:23 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/12 17:26:28 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,14 @@ int	check_die_eat(t_waiter *waiter, int time, int pos, int slep)
 	int fork_n;
 
 	id = (intptr_t)(waiter->id);
-	waiter->tdie2[id - 1] -= (time - waiter->last_eat[id - 1]);
+	usleep(slep * 1000);
+	if(pos != 0)
+	{
+		waiter->tdie2[id - 1] -= (time - waiter->last_eat[id - 1]);
+		waiter->last_eat[waiter->id - 1] = time;
+	}
+	else
+		waiter->tdie2[id - 1] -= slep;
 	usleep(slep * 1000);
 	last_id = waiter->nthread;
 	fork_n = fork_number(id, pos, last_id);
