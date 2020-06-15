@@ -7,19 +7,25 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <signal.h>
-
+#include <sys/time.h>
 
 void	dotest(int n, sem_t *sem)
 {
 	int i;
+	struct timeval time;
+
 
 	i = 0;
-	usleep(10000);
+//	usleep(10000);
 	while(1)
 	{
-		printf("process number : %d\n", n);
-		if(n == 3 && i > 100)
-			break;
+		gettimeofday(&time, NULL);
+		i = (long int)(time.tv_usec) * 1000;
+		sem_wait(sem);
+		printf("process %d, time : %d millsecond\n", n, i);
+		sem_post(sem);
+//		if(n == 3 && i > 100)
+//			break;
 		usleep(10000);
 		i++;
 	}
@@ -49,9 +55,9 @@ int main()
 	while(i < 5)
 	{
 		kill(pid[i], SIGTERM);
-		kill(pid[i], SIGKILL);
+	//	kill(pid[i], SIGKILL);
 		i++;
 	}
-	printf("status %d\n", status);
+//	printf("status %d\n", status);
 
 }
