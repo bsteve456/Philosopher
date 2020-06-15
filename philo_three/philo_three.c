@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 20:23:51 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/15 22:23:08 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/15 22:46:35 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ void	dinner(int id, t_waiter *waiter)
 	gettimeofday(&time, NULL);
 	time_m = ((int)(time.tv_usec));
 	waiter->last_eat = time_m;
-	printf("%d %d is thinking\n", waiter->last_eat, id);
+	printf("%d %d is thinking\n", waiter->last_eat * 1000, id);
 	while(1)
 	{
 		sem_wait(waiter->fork);
 		sem_wait(waiter->fork);
 		if(p_is_dead(waiter, id) == 1)
 			break;
-		printf("%d %d has taken a fork\n", waiter->last_eat, id);
-		printf("%d %d has taken a fork\n", waiter->last_eat, id);
-		printf("%d %d is eating\n", waiter->last_eat, id);
+		printf("%d %d has taken a fork\n", waiter->last_eat * 1000, id);
+		printf("%d %d has taken a fork\n", waiter->last_eat * 1000, id);
+		printf("%d %d is eating\n", waiter->last_eat * 1000, id);
 		waiter->tdie = waiter->tdie2;
 		waiter->ntoeat -= 1;
 		if(waiter->ntoeat == 0)
@@ -44,11 +44,11 @@ void	dinner(int id, t_waiter *waiter)
 		sem_post(waiter->fork);
 		if(p_is_dead(waiter, id) == 1)
 			break;
-		printf("%d %d is sleeping\n", waiter->last_eat, id);
+		printf("%d %d is sleeping\n", waiter->last_eat * 1000, id);
 		usleep(waiter->tsleep);
 		if(p_is_dead(waiter, id) == 1)
 			break;
-		printf("%d %d is thinking\n", waiter->last_eat, id);
+		printf("%d %d is thinking\n", waiter->last_eat * 1000, id);
 	}
 }
 
