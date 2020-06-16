@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 15:38:40 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 17:33:26 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,14 @@
 
 int	p_is_dead(t_waiter *waiter, int id)
 {
-	struct timeval time;
-	int time_m;
+	long time_m;
 
-	gettimeofday(&time, NULL);
-	time_m = ((int)(time.tv_usec));
+	time_m = utime();
 	waiter->tdie -= (time_m - waiter->last_eat);
 	waiter->last_eat = time_m;
 	if (waiter->tdie <= 0)
 	{
-		sem_wait(waiter->display);
-		printf("%d %d died\n", time_m / 1000, id);
-		sem_post(waiter->display);
+		ft_display(waiter, 5, id);
 		return (1);
 	}
 	return (0);
@@ -36,13 +32,9 @@ int		check_state(t_waiter *waiter, int id, int pos)
 {
 	if(pos == 1)
 	{
-		sem_wait(waiter->fork);
-		sem_wait(waiter->fork);
 		if (p_is_dead(waiter, id) == 1)
 			return(1);
-		printf("%d %d has taken a fork\n", waiter->last_eat / 1000, id);
-		printf("%d %d has taken a fork\n", waiter->last_eat / 1000, id);
-		printf("%d %d is eating\n", waiter->last_eat / 1000, id);
+		ft_display(waiter, 1, id);
 		waiter->tdie = waiter->tdie2;
 		waiter->ntoeat -= 1;
 		return (0);
@@ -54,8 +46,15 @@ int		check_state(t_waiter *waiter, int id, int pos)
 		if(p_is_dead(waiter, id) == 1)
 			return (1);
 		return (0);
-
 	}
+}
 
+long	utime()
+{
+	struct timeval time;
+	long time_m;
 
+	gettimeofday(&time, NULL);
+	time_m = (time.tv_sec) * 1000 + (time.tv_usec)/1000;
+	return (time_m);
 }

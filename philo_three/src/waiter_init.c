@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 15:26:46 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 17:24:20 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ t_waiter	*init_waiter(char **av, int ac)
 	sem_unlink("/display");
 	if (!(waiter = (t_waiter *)malloc(sizeof(t_waiter) * ft_atoi(av[1]))))
 		return (NULL);
-	waiter->tdie = ft_atoi(av[2]) * 1000;
+	waiter->tdie = ft_atoi(av[2]);
 	waiter->tdie2 = waiter->tdie;
-	waiter->teat = ft_atoi(av[3]) * 1000;
-	waiter->tsleep = ft_atoi(av[4]) * 1000;
+	waiter->teat = ft_atoi(av[3]);
+	waiter->tsleep = ft_atoi(av[4]);
 	waiter->fork = sem_open("/forks", O_CREAT, S_IRWXU, ft_atoi(av[1]));
 	waiter->display = sem_open("/display", O_CREAT, S_IRWXU, 1);
 	waiter->last_eat = 0;

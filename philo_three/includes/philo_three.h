@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 14:52:41 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 15:40:45 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 17:18:13 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@
 
 typedef struct	s_waiter
 {
-	int				tdie;
-	int				tdie2;
-	int				teat;
-	int				tsleep;
-	int				ntoeat;
-	int				last_eat;
+	long				tdie;
+	long			tdie2;
+	long				teat;
+	long				tsleep;
+	long				ntoeat;
+	long				last_eat;
 	sem_t			*fork;
 	sem_t			*display;
 }				t_waiter;
@@ -40,4 +40,6 @@ t_waiter	*init_waiter(char **av, int ac);
 int			p_is_dead(t_waiter *waiter, int id);
 int			ft_atoi(const char *str);
 int			check_state(t_waiter *waiter, int id, int pos);
+void		ft_display(t_waiter *waiter, int n, int id);
+long			utime();
 #endif
