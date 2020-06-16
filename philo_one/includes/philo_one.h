@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 14:52:41 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 22:02:09 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 23:12:17 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ typedef struct	s_waiter
 	long				*last_eat;
 	pthread_mutex_t		*fork;
 	pthread_mutex_t		*display;
-	int				id;
+	int					id;
+	int					*fn;
 }				t_waiter;
 long			*ft_tdie(int nthread, long tdie);
 long			*ft_nb_eat(int nthread);

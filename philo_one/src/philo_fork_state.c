@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 22:12:36 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/17 00:00:19 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,22 @@ int	check_die_eat(t_waiter *waiter, int pos)
 {
 	int id;
 //	int last_id;
-	int fork_n;
+//	int fork_n;
 	long time_m;
 
 	id = (intptr_t)(waiter->id);
 	time_m = utime();
 	waiter->tdie2[id - 1] -= (time_m - waiter->last_eat[id - 1]);
 	waiter->last_eat[waiter->id - 1] = time_m;
-//	usleep(slep * 1000);
-//	last_id = waiter->nthread;
-	fork_n = fork_number(id, pos, waiter->nthread);
-	if (pos == 1 && check_state(waiter, id) == 1)
+	if(pos == 1 &&  check_state(waiter, id) == 1)
 	{
-		pthread_mutex_unlock(&(waiter->fork)[fork_n]);
+		pthread_mutex_unlock(&(waiter->fork)[waiter->fn[0]]);
 		return (1);
 	}
 	else if (pos == 2 && check_state(waiter, id) == 1)
 	{
-		pthread_mutex_unlock(&(waiter->fork)[fork_n]);
-		fork_n = fork_number(id, 1, waiter->nthread);
-		pthread_mutex_unlock(&(waiter->fork)[fork_n]);
+		pthread_mutex_unlock(&(waiter->fork)[waiter->fn[1]]);
+		pthread_mutex_unlock(&(waiter->fork)[waiter->fn[0]]);
 		return (1);
 	}
 	else if (check_state(waiter, id) == 1)

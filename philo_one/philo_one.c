@@ -1,29 +1,21 @@
 #include "philo_one.h"
 
-int	fork_lock_unlock(t_waiter *waiter, int pos, int lock)
+int	fork_lock_unlock(t_waiter *waiter, int lock, int pos)
 {
-	int fn;
-
 	if(lock == 1 && pos == 1)
 	{
-		fn = fork_number(waiter->id, 1, waiter->nthread);
-		pthread_mutex_lock(&(waiter->fork[fn]));
+		pthread_mutex_lock(&(waiter->fork[waiter->fn[0]]));
 		return (check_die_eat(waiter, 1));
 	}
-	else if(lock == 1 && pos == 2)
+	else if (lock == 1 && pos == 2)
 	{
-		fn = fork_number(waiter->id, 2, waiter->nthread);
-		pthread_mutex_lock(&(waiter->fork[fn]));
+		pthread_mutex_lock(&(waiter->fork[waiter->fn[1]]));
 		return (check_die_eat(waiter, 2));
 	}
 	else if(lock == 0)
 	{
-//		waiter->tdie2[waiter->id - 1] = waiter->tdie;
-//		waiter->nb_eat[waiter->id - 1] += 1;
-		fn = fork_number(waiter->id, 1, waiter->nthread);
-		pthread_mutex_unlock(&(waiter->fork[fn]));
-		fn = fork_number(waiter->id, 2, waiter->nthread);
-		pthread_mutex_unlock(&(waiter->fork[fn]));
+		pthread_mutex_unlock(&(waiter->fork[waiter->fn[0]]));
+		pthread_mutex_unlock(&(waiter->fork[waiter->fn[1]]));
 		waiter->tdie2[waiter->id - 1] = waiter->tdie;
 		waiter->nb_eat[waiter->id - 1] += 1;
 		return (check_die_eat(waiter, 0));
@@ -34,7 +26,6 @@ int	fork_lock_unlock(t_waiter *waiter, int pos, int lock)
 void	*dinner(void *arg)
 {
 	t_waiter *waiter;
-//	static int time = 0;
 
 	waiter = arg;
 	waiter->last_eat[waiter->id - 1] = utime();
@@ -44,18 +35,14 @@ void	*dinner(void *arg)
 		if(fork_lock_unlock(waiter, 1, 1) == 1)
 			break;
 		ft_display(waiter, 1);
-		if(fork_lock_unlock(waiter, 2, 1) == 1)
+		if(fork_lock_unlock(waiter, 1, 2) == 1)
 			break;
 		ft_display(waiter, 2);
-		usleep(waiter->teat * 1000);
-//		time += (waiter->last_eat[waiter->id - 1] + waiter->teat - time);
+		usleep(waiter->teat * 990);
 		if(fork_lock_unlock(waiter, 0, 0) == 1)
 			break;
-//		if(check_die_eat(waiter, 0) == 1)
-//			break;
 		ft_display(waiter, 3);
-		usleep(waiter->tsleep * 1000);
-//		time += (waiter->last_eat[waiter->id - 1] + waiter->teat + waiter->tsleep - time);
+		usleep(waiter->tsleep * 990);
 		if(check_die_eat(waiter, 0) == 1)
 			break;
 		ft_display(waiter, 4);

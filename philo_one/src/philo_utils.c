@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:26:27 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 22:06:12 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 23:58:58 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,11 @@ void	ft_display(t_waiter *waiter, int n)
 {
 	int		id;
 	long 	last_eat;
-//	int 	teat;
-//	int 	tsleep;
-//	static	pthread_mutex_t display = PTHREAD_MUTEX_INITIALIZER;
+	long time_m;
 
 	pthread_mutex_lock(waiter->display);
 	id = (intptr_t)(waiter->id);
 	last_eat = waiter->last_eat[id - 1];
-//	teat = waiter->teat;
-//	tsleep = waiter->tsleep;
 	if (n == 1)
 		display2(last_eat, id, 1);
 	else if (n == 2)
@@ -106,7 +102,8 @@ void	ft_display(t_waiter *waiter, int n)
 		display2(last_eat, id, 3);
 	else
 		display2(last_eat, id , 4);
-	waiter->tdie2[id - 1] += (utime() - last_eat);
-	waiter->last_eat[id - 1] = utime();
+	time_m = utime();
+	waiter->tdie2[id - 1] += (time_m - last_eat);
+	waiter->last_eat[id - 1] = time_m;
 	pthread_mutex_unlock(waiter->display);
 }

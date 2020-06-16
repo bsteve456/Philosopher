@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 21:55:55 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 23:26:04 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,17 @@ long				**init_tab(char **av)
 	return (res);
 }
 
+int		*fork_number_init(int id, int nthread)
+{
+	int *fn;
+
+	if(!(fn = (int *)malloc(sizeof(int) * 2)))
+		return (0);
+	fn[0] = fork_number(id, 1, nthread);
+	fn[1] = fork_number(id, 2, nthread);
+	return (fn);
+}
+
 t_waiter		*init_waiter(char **av, long **tab, int i, int ac)
 {
 	t_waiter *waiter;
@@ -58,6 +69,7 @@ t_waiter		*init_waiter(char **av, long **tab, int i, int ac)
 	waiter->tdie2 = tab[1];
 	waiter->nb_eat = tab[2];
 	waiter->last_eat = tab[3];
+	waiter->fn = fork_number_init(i + 1, waiter->nthread);
 //	waiter->fork = fork;
 //	waiter->display = display
 	if(ac == 6)
