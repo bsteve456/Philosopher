@@ -1,50 +1,54 @@
 #include "philo_two.h"
 
-int	fork_lock_unlock(t_waiter *waiter, int pos, int lock, int time)
+int	fork_lock_unlock(t_waiter *waiter, int lock)
 {
-	if(lock == 1 && pos == 2)
+	if(lock == 1)
 	{
 		sem_wait(waiter->fork);
 		sem_wait(waiter->fork);
-		return (check_die_eat(waiter, time, 2, 1));
+		return (check_die_eat(waiter, 2));
 	}
-	else if(lock == 0)
+	else
 	{
+	/*	waiter->tdie2[waiter->id - 1] = waiter->tdie;
+		waiter->nb_eat[waiter->id - 1] += 1;*/
+		sem_post(waiter->fork);
+		sem_post(waiter->fork);
 		waiter->tdie2[waiter->id - 1] = waiter->tdie;
 		waiter->nb_eat[waiter->id - 1] += 1;
-		sem_post(waiter->fork);
-		sem_post(waiter->fork);
-		return (0);
+		return(check_die_eat(waiter, 0));
 	}
-	return (0);
 }
 
 void	*dinner(void *arg)
 {
 	t_waiter *waiter;
-	static int time = 0;
+//	static int time = 0;
 
 	waiter = arg;
-	ft_display(waiter, 4, 0);
+	waiter->last_eat[waiter->id - 1] = utime();
+	ft_display(waiter, 4);
 	while(1)
 	{
-		usleep(1000 * (waiter->id));
-		if(fork_lock_unlock(waiter, 2, 1, time) == 1)
+//		usleep(1000 * (waiter->id));
+		if(fork_lock_unlock(waiter, 1) == 1)
 			break;
-		waiter->last_eat[waiter->id - 1] = time;
-		ft_display(waiter, 1, time);
-		ft_display(waiter, 2, time);
+//		waiter->last_eat[waiter->id - 1] = time;
+		ft_display(waiter, 1);
+		ft_display(waiter, 2);
+		usleep(waiter->teat * 990);
 //		fork_lock_unlock(waiter, 0, 0, time);
-		time += (waiter->last_eat[waiter->id - 1] + waiter->teat - time);
-		fork_lock_unlock(waiter, 0, 0, time);
-
-		if(check_die_eat(waiter, time, 0, waiter->teat) == 1)
+//		time += (waiter->last_eat[waiter->id - 1] + waiter->teat - time);
+		if(fork_lock_unlock(waiter, 0) == 1)
 			break;
-		ft_display(waiter, 3, time);
-		time += (waiter->last_eat[waiter->id - 1] + waiter->teat + waiter->tsleep - time);
-		if(check_die_eat(waiter, time, 0, waiter->tsleep) == 1)
+/*		if(check_die_eat(waiter, 0) == 1)
+			break;*/
+		ft_display(waiter, 3);
+		usleep(waiter->tsleep * 990);
+//		time += (waiter->last_eat[waiter->id - 1] + waiter->teat + waiter->tsleep - time);
+		if(check_die_eat(waiter, 0) == 1)
 			break;
-		ft_display(waiter, 4, time);
+		ft_display(waiter, 4);
 	}
 	return (NULL);
 }
@@ -65,7 +69,7 @@ sem_t **init_semtab(char **av)
 int main(int ac, char **av)
 {
 	t_waiter *waiter;
-	int **tab;
+	long **tab;
 	int i;
 	sem_t **sem_tab;
 	pthread_t *tid;

@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:26:27 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/12 17:41:44 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 19:38:38 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void ft_putstr(char *s)
 		write(1, &s[i++], 1);
 }
 
-void ft_putnbr(int n)
+void ft_putnbr(long n)
 {
-	unsigned int	nb;
+	unsigned long	nb;
 	char			c;
 
 	if (n < 0)
@@ -65,7 +65,7 @@ int	ft_atoi(const char *str)
 	return (number * negative);
 }
 
-void	display2(int time, int id, int n)
+void	display2(long time, int id, int n)
 {
 	ft_putnbr(time);
 	write(1, " ", 2);
@@ -76,37 +76,42 @@ void	display2(int time, int id, int n)
 		ft_putstr(" is eating\n");
 	else if (n == 3)
 		ft_putstr(" is sleeping\n");
-	else
+	else if(n == 4)
 		ft_putstr(" is thinking\n");
+	else
+		ft_putstr(" is died\n");
+
 }
 
-void	ft_display(t_waiter *waiter, int n, int time)
+void	ft_display(t_waiter *waiter, int n)
 {
 	int		id;
-	int 	last_eat;
-	int 	teat;
-	int 	tsleep;
+	long 	last_eat;
+//	int 	teat;
+//	int 	tsleep;
 
+	usleep(100);
+	if(check_other_philo(waiter) == 1)
+		return;
 	sem_wait(waiter->display);
-	id = (intptr_t)(waiter->id);
+	id = waiter->id;
+//	id = (intptr_t)(waiter->id);
+//	last_eat = waiter->last_eat[id - 1];
+//	teat = waiter->teat;
+//	tsleep = waiter->tsleep;
 	last_eat = waiter->last_eat[id - 1];
-	teat = waiter->teat;
-	tsleep = waiter->tsleep;
 	if (n == 1)
-		display2(time, id, 1);
+		display2(last_eat, id, 1);
 	else if (n == 2)
 	{
 		display2(last_eat, id, 1);
 		display2(last_eat, id, 2);
 	}
 	else if (n == 3)
-		display2(last_eat + teat, id, 3);
-	else if (n == 4 && time == 0)
-		display2(time, id, 4);
-	else
-	{
-		display2(last_eat + teat + tsleep, id, 4);
-		waiter->last_eat[id - 1] += (teat + tsleep);
-	}
+		display2(last_eat, id, 3);
+	else if (n == 4)
+		display2(last_eat, id, 4);
+	waiter->tdie2[id - 1] += (utime() - last_eat);
+	waiter->last_eat[id - 1] = utime();
 	sem_post(waiter->display);
 }

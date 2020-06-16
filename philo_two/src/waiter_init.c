@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/12 12:10:03 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 18:51:18 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ sem_t		*init_sem(int n, char *str)
 }
 
 
-int			**init_tab(char **av)
+long			**init_tab(char **av)
 {
-	int **res;
+	long **res;
 
-	if (!(res = (int **)malloc(sizeof(int *) * 4)))
+	if (!(res = (long **)malloc(sizeof(long *) * 4)))
 		return (0);
 	res[1] = ft_tdie(ft_atoi(av[1]), ft_atoi(av[2]));
 	res[2] = ft_nb_eat(ft_atoi(av[1]));
@@ -35,7 +35,7 @@ int			**init_tab(char **av)
 	return (res);
 }
 
-t_waiter	*init_waiter(char **av, int **tab, int i, int ac)
+t_waiter	*init_waiter(char **av, long **tab, int i, int ac)
 {
 	t_waiter *waiter;
 
@@ -54,4 +54,15 @@ t_waiter	*init_waiter(char **av, int **tab, int i, int ac)
 		waiter->ntoeat = -1;
 	waiter->id = (intptr_t)(i + 1);
 	return (waiter);
+}
+
+long	utime()
+{
+	struct timeval time;
+	long time_m;
+
+	gettimeofday(&time, NULL);
+	time_m = (time.tv_sec) * 1000 + (time.tv_usec) / 1000;
+	return (time_m);
+
 }
