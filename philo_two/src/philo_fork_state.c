@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 19:42:47 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 19:45:37 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	philo_state(t_waiter *waiter)
 	{
 		ndie++;
 		sem_wait(waiter->display);
-//		printf("%d %d died\n", time, id);
 		display2(waiter->last_eat[id - 1], id, 5);
 		sem_post(waiter->display);
 		return (0);
@@ -67,7 +66,6 @@ int	check_die_eat(t_waiter *waiter, int pos)
 	waiter->last_eat[id - 1] = time_m;
 	if (pos == 2 && check_state(waiter, id) == 1)
 	{
-//		printf("yes\n");
 		sem_post(waiter->fork);
 		sem_post(waiter->fork);
 		return (1);

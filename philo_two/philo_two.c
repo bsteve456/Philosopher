@@ -10,8 +10,6 @@ int	fork_lock_unlock(t_waiter *waiter, int lock)
 	}
 	else
 	{
-	/*	waiter->tdie2[waiter->id - 1] = waiter->tdie;
-		waiter->nb_eat[waiter->id - 1] += 1;*/
 		sem_post(waiter->fork);
 		sem_post(waiter->fork);
 		waiter->tdie2[waiter->id - 1] = waiter->tdie;
@@ -23,29 +21,21 @@ int	fork_lock_unlock(t_waiter *waiter, int lock)
 void	*dinner(void *arg)
 {
 	t_waiter *waiter;
-//	static int time = 0;
 
 	waiter = arg;
 	waiter->last_eat[waiter->id - 1] = utime();
 	ft_display(waiter, 4);
 	while(1)
 	{
-//		usleep(1000 * (waiter->id));
 		if(fork_lock_unlock(waiter, 1) == 1)
 			break;
-//		waiter->last_eat[waiter->id - 1] = time;
 		ft_display(waiter, 1);
 		ft_display(waiter, 2);
 		usleep(waiter->teat * 990);
-//		fork_lock_unlock(waiter, 0, 0, time);
-//		time += (waiter->last_eat[waiter->id - 1] + waiter->teat - time);
 		if(fork_lock_unlock(waiter, 0) == 1)
 			break;
-/*		if(check_die_eat(waiter, 0) == 1)
-			break;*/
 		ft_display(waiter, 3);
 		usleep(waiter->tsleep * 990);
-//		time += (waiter->last_eat[waiter->id - 1] + waiter->teat + waiter->tsleep - time);
 		if(check_die_eat(waiter, 0) == 1)
 			break;
 		ft_display(waiter, 4);

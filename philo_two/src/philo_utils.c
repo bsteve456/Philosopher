@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:26:27 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 19:38:38 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 19:45:54 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,12 @@ void	ft_display(t_waiter *waiter, int n)
 {
 	int		id;
 	long 	last_eat;
-//	int 	teat;
-//	int 	tsleep;
 
 	usleep(100);
 	if(check_other_philo(waiter) == 1)
 		return;
 	sem_wait(waiter->display);
 	id = waiter->id;
-//	id = (intptr_t)(waiter->id);
-//	last_eat = waiter->last_eat[id - 1];
-//	teat = waiter->teat;
-//	tsleep = waiter->tsleep;
 	last_eat = waiter->last_eat[id - 1];
 	if (n == 1)
 		display2(last_eat, id, 1);
