@@ -1,18 +1,18 @@
 #include "philo_one.h"
 
-int	fork_lock_unlock(t_waiter *waiter, int lock, int pos)
+int	fork_lock_unlock(t_waiter *waiter, int pos)
 {
-	if(lock == 1 && pos == 1)
+	if(pos == 1)
 	{
 		pthread_mutex_lock(&(waiter->fork[waiter->fn[0]]));
 		return (check_die_eat(waiter, 1));
 	}
-	else if (lock == 1 && pos == 2)
+	else if (pos == 2)
 	{
 		pthread_mutex_lock(&(waiter->fork[waiter->fn[1]]));
 		return (check_die_eat(waiter, 2));
 	}
-	else if(lock == 0)
+	else if(pos == 3)
 	{
 		pthread_mutex_unlock(&(waiter->fork[waiter->fn[0]]));
 		pthread_mutex_unlock(&(waiter->fork[waiter->fn[1]]));
@@ -32,17 +32,17 @@ void	*dinner(void *arg)
 	ft_display(waiter, 4);
 	while(1)
 	{
-		if(fork_lock_unlock(waiter, 1, 1) == 1)
+		if(fork_lock_unlock(waiter, 1) == 1)
 			break;
 		ft_display(waiter, 1);
-		if(fork_lock_unlock(waiter, 1, 2) == 1)
+		if(fork_lock_unlock(waiter, 2) == 1)
 			break;
 		ft_display(waiter, 2);
-		usleep(waiter->teat * 990);
-		if(fork_lock_unlock(waiter, 0, 0) == 1)
+		usleep(waiter->teat * 995);
+		if(fork_lock_unlock(waiter, 3) == 1)
 			break;
 		ft_display(waiter, 3);
-		usleep(waiter->tsleep * 990);
+		usleep(waiter->tsleep * 995);
 		if(check_die_eat(waiter, 0) == 1)
 			break;
 		ft_display(waiter, 4);

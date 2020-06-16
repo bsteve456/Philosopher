@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 23:26:04 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/17 00:35:14 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ int		*fork_number_init(int id, int nthread)
 t_waiter		*init_waiter(char **av, long **tab, int i, int ac)
 {
 	t_waiter *waiter;
-//	pthread_mutex_t *fork;
 
-//	fork = init_mutex(ft_atoi(av[1]));
 	if (!(waiter = (t_waiter *)malloc(sizeof(t_waiter) * ft_atoi(av[1]) + 1)))
 		return (0);
 	waiter->nthread = ft_atoi(av[1]);
@@ -70,8 +68,6 @@ t_waiter		*init_waiter(char **av, long **tab, int i, int ac)
 	waiter->nb_eat = tab[2];
 	waiter->last_eat = tab[3];
 	waiter->fn = fork_number_init(i + 1, waiter->nthread);
-//	waiter->fork = fork;
-//	waiter->display = display
 	if(ac == 6)
 		waiter->ntoeat = ft_atoi(av[5]);
 	else
