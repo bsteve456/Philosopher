@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/15 22:45:13 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 15:17:53 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	p_is_dead(t_waiter *waiter, int id)
 	if (waiter->tdie <= 0)
 	{
 		sem_wait(waiter->display);
-		printf("%d %d died\n", time_m, id);
+		printf("%d %d died\n", time_m / 1000, id);
 		sem_post(waiter->display);
 		return (1);
 	}

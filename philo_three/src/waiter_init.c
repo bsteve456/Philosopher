@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/15 22:22:39 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 15:26:46 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_waiter	*init_waiter(char **av, int ac)
 {
 	t_waiter *waiter;
 
+	sem_unlink("/forks");
+	sem_unlink("/display");
 	if (!(waiter = (t_waiter *)malloc(sizeof(t_waiter) * ft_atoi(av[1]))))
 		return (NULL);
 	waiter->tdie = ft_atoi(av[2]) * 1000;

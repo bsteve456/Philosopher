@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 20:23:51 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/15 22:46:35 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 15:28:07 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ void	dinner(int id, t_waiter *waiter)
 	gettimeofday(&time, NULL);
 	time_m = ((int)(time.tv_usec));
 	waiter->last_eat = time_m;
-	printf("%d %d is thinking\n", waiter->last_eat * 1000, id);
+	printf("%d %d is thinking\n", waiter->last_eat / 1000, id);
 	while(1)
 	{
 		sem_wait(waiter->fork);
 		sem_wait(waiter->fork);
 		if(p_is_dead(waiter, id) == 1)
 			break;
-		printf("%d %d has taken a fork\n", waiter->last_eat * 1000, id);
-		printf("%d %d has taken a fork\n", waiter->last_eat * 1000, id);
-		printf("%d %d is eating\n", waiter->last_eat * 1000, id);
+		printf("%d %d has taken a fork\n", waiter->last_eat / 1000, id);
+		printf("%d %d has taken a fork\n", waiter->last_eat / 1000, id);
+		printf("%d %d is eating\n", waiter->last_eat / 1000, id);
 		waiter->tdie = waiter->tdie2;
 		waiter->ntoeat -= 1;
 		if(waiter->ntoeat == 0)
@@ -44,12 +44,35 @@ void	dinner(int id, t_waiter *waiter)
 		sem_post(waiter->fork);
 		if(p_is_dead(waiter, id) == 1)
 			break;
-		printf("%d %d is sleeping\n", waiter->last_eat * 1000, id);
+		printf("%d %d is sleeping\n", waiter->last_eat / 1000, id);
 		usleep(waiter->tsleep);
 		if(p_is_dead(waiter, id) == 1)
 			break;
-		printf("%d %d is thinking\n", waiter->last_eat * 1000, id);
+		printf("%d %d is thinking\n", waiter->last_eat / 1000, id);
 	}
+}
+void	kill_process(char **av, pid_t pid)
+{
+	int status;
+	int i;
+
+	i = 0;
+	while(i < atoi(av[1]))
+	{
+		waitpid(-1, &status, 0);
+		if(status == 512)
+			break;
+		i++;
+	}
+	i = 0;
+	while(i < atoi(av[1]))
+	{
+		kill(pid[i], SIGTERM);
+		i++;
+	}
+}
+
+
 }
 
 int main(int ac, char **av)
@@ -62,8 +85,6 @@ int main(int ac, char **av)
 	i = 0;
 	if(ac >= 5 && ft_atoi(av[1]) > 0)
 	{
-		sem_unlink("/forks");
-		sem_unlink("/display");
 		if(!(pid = (pid_t *)malloc(sizeof(pid_t) * ft_atoi(av[1]) + 1)))
 			return (0);
 		waiter = init_waiter(av, ac);
@@ -77,20 +98,7 @@ int main(int ac, char **av)
 			}
 			i++;
 		}
-		i = 0;
-		while(i < atoi(av[1]))
-		{
-			waitpid(-1, &status, 0);
-			if(status == 512)
-				break;
-			i++;
-		}
-		i = 0;
-		while(i < atoi(av[1]))
-		{
-			kill(pid[i], SIGTERM);
-			i++;
-		}
+		kill_process(av, pid);
 	}
-return(0);
+	return(0);
 }
