@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 20:23:51 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 15:28:07 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 15:30:51 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	dinner(int id, t_waiter *waiter)
 {
-	struct timeval time;
-	int time_m;
+	struct timeval	time;
+	int				time_m;
 
 	gettimeofday(&time, NULL);
 	time_m = ((int)(time.tv_usec));
@@ -51,7 +51,7 @@ void	dinner(int id, t_waiter *waiter)
 		printf("%d %d is thinking\n", waiter->last_eat / 1000, id);
 	}
 }
-void	kill_process(char **av, pid_t pid)
+void	kill_process(char **av, pid_t *pid)
 {
 	int status;
 	int i;
@@ -72,15 +72,11 @@ void	kill_process(char **av, pid_t pid)
 	}
 }
 
-
-}
-
 int main(int ac, char **av)
 {
-	int i;
-	int status;
-	t_waiter *waiter;
-	pid_t *pid;
+	int			i;
+	t_waiter	*waiter;
+	pid_t		*pid;
 
 	i = 0;
 	if(ac >= 5 && ft_atoi(av[1]) > 0)
