@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/17 01:18:12 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/17 01:55:00 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,8 @@ int	check_state(t_waiter *waiter, int id)
 int	check_die_eat(t_waiter *waiter, int pos)
 {
 	int id;
-	long time_m;
 
 	id = (intptr_t)(waiter->id);
-	time_m = utime();
-	waiter->tdie2[id - 1] -= (time_m - waiter->last_eat[id - 1]);
-	waiter->last_eat[waiter->id - 1] = time_m;
 	if(check_state(waiter, id) == 1)
 	{
 		if(pos == 1)
