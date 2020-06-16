@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/09 17:45:30 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 21:55:55 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ pthread_mutex_t	*init_mutex(int n)
 }
 
 
-int				**init_tab(char **av)
+long				**init_tab(char **av)
 {
-	int **res;
+	long **res;
 
-	if (!(res = (int **)malloc(sizeof(int *) * 4)))
+	if (!(res = (long **)malloc(sizeof(long *) * 4)))
 		return (0);
 	res[1] = ft_tdie(ft_atoi(av[1]), ft_atoi(av[2]));
 	res[2] = ft_nb_eat(ft_atoi(av[1]));
@@ -43,12 +43,12 @@ int				**init_tab(char **av)
 	return (res);
 }
 
-t_waiter		*init_waiter(char **av, int **tab, int i, int ac)
+t_waiter		*init_waiter(char **av, long **tab, int i, int ac)
 {
 	t_waiter *waiter;
-	pthread_mutex_t *fork;
+//	pthread_mutex_t *fork;
 
-	fork = init_mutex(ft_atoi(av[1]));
+//	fork = init_mutex(ft_atoi(av[1]));
 	if (!(waiter = (t_waiter *)malloc(sizeof(t_waiter) * ft_atoi(av[1]) + 1)))
 		return (0);
 	waiter->nthread = ft_atoi(av[1]);
@@ -58,7 +58,8 @@ t_waiter		*init_waiter(char **av, int **tab, int i, int ac)
 	waiter->tdie2 = tab[1];
 	waiter->nb_eat = tab[2];
 	waiter->last_eat = tab[3];
-	waiter->fork = fork;
+//	waiter->fork = fork;
+//	waiter->display = display
 	if(ac == 6)
 		waiter->ntoeat = ft_atoi(av[5]);
 	else
@@ -66,3 +67,14 @@ t_waiter		*init_waiter(char **av, int **tab, int i, int ac)
 	waiter->id = (intptr_t)(i + 1);
 	return (waiter);
 }
+
+long	utime()
+{
+	struct timeval time;
+	long time_m;
+
+	gettimeofday(&time, NULL);
+	time_m = (time.tv_sec) * 1000 + (time.tv_usec) / 1000;
+	return (time_m);
+}
+

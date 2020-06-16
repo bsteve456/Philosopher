@@ -6,18 +6,18 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 15:17:12 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/09 15:39:00 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 21:54:24 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-int *ft_tdie(int nthread, int tdie)
+long *ft_tdie(int nthread, long tdie)
 {
-	int *tdie1;
+	long *tdie1;
 	int i;
 
-	if (!(tdie1 = (int *)malloc(sizeof(int) * nthread)))
+	if (!(tdie1 = (long *)malloc(sizeof(long) * nthread)))
 		return (0);
 	i = 0;
 	while (i < nthread)
@@ -28,12 +28,12 @@ int *ft_tdie(int nthread, int tdie)
 	return (tdie1);
 }
 
-int *ft_nb_eat(int nthread)
+long *ft_nb_eat(int nthread)
 {
-	int *nb_eat;
+	long *nb_eat;
 	int i;
 
-	if (!(nb_eat = (int *)malloc(sizeof(int) * nthread)))
+	if (!(nb_eat = (long *)malloc(sizeof(long) * nthread)))
 		return (0);
 	i = 0;
 	while (i < nthread)
@@ -44,12 +44,12 @@ int *ft_nb_eat(int nthread)
 	return (nb_eat);
 }
 
-int *ft_last_eat(int nthread)
+long *ft_last_eat(int nthread)
 {
-	int *last_eat;
+	long *last_eat;
 	int i;
 
-	if (!(last_eat = (int *)malloc(sizeof(int) * nthread)))
+	if (!(last_eat = (long *)malloc(sizeof(long) * nthread)))
 		return (0);
 	i = 0;
 	while (i < nthread)
