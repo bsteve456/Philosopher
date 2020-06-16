@@ -6,12 +6,22 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 20:23:51 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 15:30:51 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 15:44:36 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
 
+
+void	has_eat_enough(t_waiter *waiter)
+{
+	if(waiter->ntoeat == 0)
+	{
+		sem_post(waiter->fork);
+		sem_post(waiter->fork);
+		exit(0);
+	}
+}
 
 void	dinner(int id, t_waiter *waiter)
 {
@@ -24,25 +34,11 @@ void	dinner(int id, t_waiter *waiter)
 	printf("%d %d is thinking\n", waiter->last_eat / 1000, id);
 	while(1)
 	{
-		sem_wait(waiter->fork);
-		sem_wait(waiter->fork);
-		if(p_is_dead(waiter, id) == 1)
+		if(check_state(waiter, id , 1) == 1)
 			break;
-		printf("%d %d has taken a fork\n", waiter->last_eat / 1000, id);
-		printf("%d %d has taken a fork\n", waiter->last_eat / 1000, id);
-		printf("%d %d is eating\n", waiter->last_eat / 1000, id);
-		waiter->tdie = waiter->tdie2;
-		waiter->ntoeat -= 1;
-		if(waiter->ntoeat == 0)
-		{
-			sem_post(waiter->fork);
-			sem_post(waiter->fork);
-			exit(0);
-		}
+		has_eat_enough(waiter);
 		usleep(waiter->teat);
-		sem_post(waiter->fork);
-		sem_post(waiter->fork);
-		if(p_is_dead(waiter, id) == 1)
+		if(check_state(waiter, id , 2) == 1)
 			break;
 		printf("%d %d is sleeping\n", waiter->last_eat / 1000, id);
 		usleep(waiter->tsleep);
@@ -51,6 +47,7 @@ void	dinner(int id, t_waiter *waiter)
 		printf("%d %d is thinking\n", waiter->last_eat / 1000, id);
 	}
 }
+
 void	kill_process(char **av, pid_t *pid)
 {
 	int status;

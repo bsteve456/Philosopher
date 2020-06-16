@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 15:17:53 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 15:38:40 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,33 @@ int	p_is_dead(t_waiter *waiter, int id)
 		return (1);
 	}
 	return (0);
+}
+
+
+int		check_state(t_waiter *waiter, int id, int pos)
+{
+	if(pos == 1)
+	{
+		sem_wait(waiter->fork);
+		sem_wait(waiter->fork);
+		if (p_is_dead(waiter, id) == 1)
+			return(1);
+		printf("%d %d has taken a fork\n", waiter->last_eat / 1000, id);
+		printf("%d %d has taken a fork\n", waiter->last_eat / 1000, id);
+		printf("%d %d is eating\n", waiter->last_eat / 1000, id);
+		waiter->tdie = waiter->tdie2;
+		waiter->ntoeat -= 1;
+		return (0);
+	}
+	else
+	{
+		sem_post(waiter->fork);
+		sem_post(waiter->fork);
+		if(p_is_dead(waiter, id) == 1)
+			return (1);
+		return (0);
+
+	}
+
+
 }

@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 14:52:41 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/15 22:45:57 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/16 15:40:45 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,5 @@ typedef struct	s_waiter
 t_waiter	*init_waiter(char **av, int ac);
 int			p_is_dead(t_waiter *waiter, int id);
 int			ft_atoi(const char *str);
+int			check_state(t_waiter *waiter, int id, int pos);
 #endif
