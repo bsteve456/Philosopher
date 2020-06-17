@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/17 03:57:13 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/17 21:49:23 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ int	philo_state(t_waiter *waiter)
 	{
 		if(ndie == 0)
 		{
+			ndie++;
 			pthread_mutex_lock(waiter->display);
 			display2(utime(), id, 5);
 			pthread_mutex_unlock(waiter->display);
-			ndie++;
 		}
 		return (0);
 	}

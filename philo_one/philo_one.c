@@ -14,7 +14,7 @@ int	fork_lock_unlock(t_waiter *waiter, int pos)
 	else if (pos == 2)
 	{
 		pthread_mutex_lock(&(waiter->fork[waiter->fn[1]]));
-		waiter->last_eat[waiter->id - 1] = utime();
+//		waiter->last_eat[waiter->id - 1] = utime();
 //		waiter->tdie2[id - 1] -= (utime() - waiter->last_eat[id - 1]);
 //		waiter->last_eat[waiter->id - 1] = utime();
 	}
@@ -46,13 +46,12 @@ void	*dinner(void *arg)
 			break;
 		ft_display(waiter, 2);
 //		waiter->tdie2[waiter->id - 1] = waiter->tdie;
-//		waiter->last_eat[waiter->id - 1] = utime();
+		waiter->last_eat[waiter->id - 1] = utime();
 		waiter->nb_eat[waiter->id - 1] += 1;
-		usleep(waiter->teat * 995);
+		usleep(waiter->teat * 1000);
 		if(fork_lock_unlock(waiter, 3) == 1)
 			break;
-		ft_display(waiter, 3);
-		usleep(waiter->tsleep * 995);
+		usleep(waiter->tsleep * 1000);
 //		waiter->tdie2[waiter->id - 1] -= (utime() - waiter->last_eat[waiter->id - 1]);
 //		waiter->last_eat[waiter->id - 1] = utime();
 		if(check_die_eat(waiter, 0) == 1)
