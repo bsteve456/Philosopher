@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/17 01:55:00 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/17 03:57:13 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,19 @@
 int check_other_philo(t_waiter *waiter)
 {
 	int i;
+	long n;
 
 	i = 0;
 	while (i < waiter->nthread)
 	{
-		if (waiter->tdie2[i] <= 0)
-			return (1);
+		n = utime() - waiter->last_eat[i];
+//		pthread_mutex_lock(waiter->display);
+//		pthread_mutex_unlock(waiter->display);
+		if (n >= waiter->tdie)
+			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 int	philo_state(t_waiter *waiter)
@@ -32,16 +36,20 @@ int	philo_state(t_waiter *waiter)
 	static int	ndie = 0;
 
 	id = (intptr_t)(waiter->id);
-	if (waiter->tdie2[id - 1] <= 0 && ndie == 0)
+	if (check_other_philo(waiter) != -1
+		&& (utime() - waiter->last_eat[id - 1])>= waiter->tdie )
 	{
-		ndie++;
-		pthread_mutex_lock(waiter->display);
-		display2(waiter->last_eat[id - 1], id, 5);
-		pthread_mutex_unlock(waiter->display);
+		if(ndie == 0)
+		{
+			pthread_mutex_lock(waiter->display);
+			display2(utime(), id, 5);
+			pthread_mutex_unlock(waiter->display);
+			ndie++;
+		}
 		return (0);
 	}
-	else if (check_other_philo(waiter) == 1)
-		return (0);
+//	else if (check_other_philo(waiter) == 1)
+//		return (0);
 	return (1);
 }
 

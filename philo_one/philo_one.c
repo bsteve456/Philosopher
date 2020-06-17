@@ -2,29 +2,30 @@
 
 int	fork_lock_unlock(t_waiter *waiter, int pos)
 {
-	int id;
+//	int id;
 
-	id = waiter->id;
+//	id = waiter->id;
 	if(pos == 1)
 	{
 		pthread_mutex_lock(&(waiter->fork[waiter->fn[0]]));
-		waiter->tdie2[id - 1] -= (utime() - waiter->last_eat[id - 1]);
-		waiter->last_eat[waiter->id - 1] = utime();
+//	waiter->tdie2[id - 1] -= (utime() - waiter->last_eat[id - 1]);
+//		waiter->last_eat[waiter->id - 1] = utime();
 	}
 	else if (pos == 2)
 	{
 		pthread_mutex_lock(&(waiter->fork[waiter->fn[1]]));
-		waiter->tdie2[id - 1] -= (utime() - waiter->last_eat[id - 1]);
 		waiter->last_eat[waiter->id - 1] = utime();
+//		waiter->tdie2[id - 1] -= (utime() - waiter->last_eat[id - 1]);
+//		waiter->last_eat[waiter->id - 1] = utime();
 	}
 	else if(pos == 3)
 	{
 		pthread_mutex_unlock(&(waiter->fork[waiter->fn[0]]));
 		pthread_mutex_unlock(&(waiter->fork[waiter->fn[1]]));
-		waiter->tdie2[id - 1] -= (utime() - waiter->last_eat[id - 1]);
-		waiter->last_eat[waiter->id - 1] = utime();
-		waiter->tdie2[waiter->id - 1] = waiter->tdie;
-		waiter->nb_eat[waiter->id - 1] += 1;
+//		waiter->tdie2[id - 1] -= (utime() - waiter->last_eat[id - 1]);
+//		waiter->last_eat[waiter->id - 1] = utime();
+//		waiter->tdie2[waiter->id - 1] = waiter->tdie;
+//		waiter->nb_eat[waiter->id - 1] += 1;
 	}
 	return (check_die_eat(waiter, pos));
 }
@@ -44,11 +45,16 @@ void	*dinner(void *arg)
 		if(fork_lock_unlock(waiter, 2) == 1)
 			break;
 		ft_display(waiter, 2);
+//		waiter->tdie2[waiter->id - 1] = waiter->tdie;
+//		waiter->last_eat[waiter->id - 1] = utime();
+		waiter->nb_eat[waiter->id - 1] += 1;
 		usleep(waiter->teat * 995);
 		if(fork_lock_unlock(waiter, 3) == 1)
 			break;
 		ft_display(waiter, 3);
 		usleep(waiter->tsleep * 995);
+//		waiter->tdie2[waiter->id - 1] -= (utime() - waiter->last_eat[waiter->id - 1]);
+//		waiter->last_eat[waiter->id - 1] = utime();
 		if(check_die_eat(waiter, 0) == 1)
 			break;
 		ft_display(waiter, 4);

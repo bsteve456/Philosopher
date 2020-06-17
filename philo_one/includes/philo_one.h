@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 14:52:41 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 23:12:17 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/17 04:03:04 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ int				ft_atoi(const char *str);
 long			utime(void);
 pthread_mutex_t	*init_mutex(int n);
 void			display2(long time, int id, int n);
-
+void			ft_putnbr(long n);
+int				check_other_philo(t_waiter *waiter);
 #endif
