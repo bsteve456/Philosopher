@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/17 21:49:23 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/18 13:15:59 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int check_other_philo(t_waiter *waiter)
 	while (i < waiter->nthread)
 	{
 		n = utime() - waiter->last_eat[i];
-//		pthread_mutex_lock(waiter->display);
-//		pthread_mutex_unlock(waiter->display);
 		if (n >= waiter->tdie)
 			return (i);
 		i++;
@@ -48,8 +46,6 @@ int	philo_state(t_waiter *waiter)
 		}
 		return (0);
 	}
-//	else if (check_other_philo(waiter) == 1)
-//		return (0);
 	return (1);
 }
 
