@@ -31,10 +31,11 @@ void	*dinner(void *arg)
 		ft_display(waiter, 2);
 		waiter->last_eat[waiter->id - 1] = utime();
 		waiter->nb_eat[waiter->id - 1] += 1;
-		usleep(waiter->teat * 1000);
+		usleep(waiter->teat);
 		if(fork_lock_unlock(waiter, 3) == 1)
 			break;
-		usleep(waiter->tsleep * 1000);
+		ft_display(waiter, 3);
+		usleep(waiter->tsleep);
 		if(check_die_eat(waiter, 0) == 1)
 			break;
 		ft_display(waiter, 4);

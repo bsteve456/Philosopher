@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/18 13:17:47 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/18 16:12:49 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ t_waiter		*init_waiter(char **av, long **tab, int i, int ac)
 		return (0);
 	waiter->nthread = ft_atoi(av[1]);
 	waiter->tdie = ft_atoi(av[2]);
-	waiter->teat = ft_atoi(av[3]);
-	waiter->tsleep = ft_atoi(av[4]);
+	waiter->teat = ft_atoi(av[3]) * 1000;
+	waiter->tsleep = ft_atoi(av[4]) * 1000;
 	waiter->nb_eat = tab[2];
 	waiter->last_eat = tab[3];
 	waiter->fn = fork_number_init(i + 1, waiter->nthread);
@@ -75,7 +75,7 @@ t_waiter		*init_waiter(char **av, long **tab, int i, int ac)
 
 long	utime()
 {
-	struct timeval time;
+	static struct timeval time;
 	long time_m;
 
 	gettimeofday(&time, NULL);
