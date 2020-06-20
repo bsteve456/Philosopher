@@ -1,18 +1,20 @@
 #include "philo_one.h"
 
-int	fork_lock_unlock(t_waiter *waiter, int pos)
+/*int	fork_lock_unlock(t_waiter *waiter, int pos)
 {
 	if(pos == 1)
 		pthread_mutex_lock(&(waiter->fork[waiter->fn[0]]));
 	else if (pos == 2)
+	{
 		pthread_mutex_lock(&(waiter->fork[waiter->fn[1]]));
+	}
 	else if(pos == 3)
 	{
 		pthread_mutex_unlock(&(waiter->fork[waiter->fn[0]]));
 		pthread_mutex_unlock(&(waiter->fork[waiter->fn[1]]));
 	}
 	return (check_die_eat(waiter, pos));
-}
+}*/
 
 void	*dinner(void *arg)
 {
@@ -20,25 +22,33 @@ void	*dinner(void *arg)
 
 	waiter = arg;
 	waiter->last_eat[waiter->id - 1] = utime();
-	ft_display(waiter, 4);
+	pthread_mutex_lock(waiter->display);
+	is_thinking(waiter->id, waiter->last_eat[waiter->id - 1]);
+	pthread_mutex_unlock(waiter->display);
+//	ft_display(waiter, 4, waiter->last_eat[waiter->id - 1]);
 	while(1)
 	{
-		if(fork_lock_unlock(waiter, 1) == 1)
+		if(lock_fork(waiter) == 1)
 			break;
-		ft_display(waiter, 1);
-		if(fork_lock_unlock(waiter, 2) == 1)
+//		ft_display(waiter, 1, utime());
+		if(lock_fork2(waiter) == 1)
 			break;
-		ft_display(waiter, 2);
-		waiter->last_eat[waiter->id - 1] = utime();
-		waiter->nb_eat[waiter->id - 1] += 1;
+//		waiter->last_eat[waiter->id - 1] = utime();
+//		ft_display(waiter, 2, ut);
+//		ft_display(waiter, 2, waiter->last_eat[waiter->id - 1]);
+//		waiter->last_eat[waiter->id - 1] = utime();
+//		waiter->nb_eat[waiter->id - 1] += 1;
 		usleep(waiter->teat);
-		if(fork_lock_unlock(waiter, 3) == 1)
+		if(unlock_fork(waiter) == 1)
 			break;
-		ft_display(waiter, 3);
+//		ft_display(waiter, 3, utime());
 		usleep(waiter->tsleep);
-		if(check_die_eat(waiter, 0) == 1)
+		if(philo_state(waiter) == 1)
 			break;
-		ft_display(waiter, 4);
+		pthread_mutex_lock(waiter->display);
+		is_thinking(waiter->id, utime());
+		pthread_mutex_unlock(waiter->display);
+//		ft_display(waiter, 4, utime());
 	}
 	return (NULL);
 }

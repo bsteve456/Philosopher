@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:26:27 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/18 16:10:15 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/19 17:09:56 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,29 @@ int	ft_atoi(const char *str)
 	return (number * negative);
 }
 
-void	display2(long time, int id, int n)
+void	dis_utils(long time, int id)
 {
 	ft_putnbr(time);
 	write(1, " ", 2);
 	ft_putnbr(id);
+//(void)time;
+//(void)id;
+}
+
+void	display2(long time, int id, int n)
+{
+	dis_utils(time, id);
+/*	ft_putnbr(time);
+	write(1, " ", 2);
+	ft_putnbr(id);*/
 	if (n == 1)
 		ft_putstr(" has taken a fork\n");
 	else if (n == 2)
+	{
+		ft_putstr(" has taken a fork\n");
+		dis_utils(time, id);
 		ft_putstr(" is eating\n");
+	}
 	else if (n == 3)
 		ft_putstr(" is sleeping\n");
 	else if(n == 4)
@@ -82,25 +96,25 @@ void	display2(long time, int id, int n)
 		ft_putstr(" is died\n");
 }
 
-void	ft_display(t_waiter *waiter, int n)
+void	ft_display(t_waiter *waiter, int n, long time)
 {
 	int		id;
-	long 	last_eat;
+//	long 	last_eat;
 
 	pthread_mutex_lock(waiter->display);
 	id = (intptr_t)(waiter->id);
-	last_eat = utime();
+//	last_eat = utime();
 	if (n == 1)
-		display2(last_eat, id, 1);
+		display2(time, id, 1);
 	else if (n == 2)
 	{
-		display2(last_eat, id, 1);
-		display2(last_eat, id, 2);
+//		display2(time, id, 1);
+		display2(time, id, 2);
 	}
 	else if (n == 3)
-		display2(last_eat, id, 3);
+		display2(time, id, 3);
 	else
-		display2(last_eat, id , 4);
-	waiter->last_eat[id - 1] += 2;
+		display2(time, id , 4);
+	waiter->last_eat[id - 1] += 10;
 	pthread_mutex_unlock(waiter->display);
 }

@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 14:52:41 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/17 21:39:56 by blacking         ###   ########.fr       */
+/*   Updated: 2020/06/18 19:55:04 by blacking         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,25 @@ long			*ft_nb_eat(int nthread);
 long			*ft_last_eat(int nthread);
 long			**init_tab(char **av);
 t_waiter		*init_waiter(char **av, long **tab, int i, int ac);
-int				check_die_eat(t_waiter *waiter, int pos);
+//int				check_die_eat(t_waiter *waiter, int pos);
 int				fork_number(int id, int pos, int last);
-void			ft_display(t_waiter *waiter, int n);
+void			ft_display(t_waiter *waiter, int n, long time);
 int				ft_atoi(const char *str);
 long			utime(void);
 pthread_mutex_t	*init_mutex(int n);
 void			display2(long time, int id, int n);
+int				check_state(t_waiter *waiter);
+int				philo_state(t_waiter *waiter);
 void			ft_putnbr(long n);
-int				check_other_philo(t_waiter *waiter);
+void			ft_putstr(char *s);
+void			dis_utils(long time, int id);
+int				lock_fork(t_waiter *waiter);
+int				lock_fork2(t_waiter *waiter);
+int				unlock_fork(t_waiter *waiter);
+void			has_afork(int id, long time);
+void			is_eating(int id, long time);
+void			is_sleeping(int id, long time);
+void			is_thinking(int id, long time);
+void			is_dead(int id, long time);
+void			test(int id, long time);
 #endif
