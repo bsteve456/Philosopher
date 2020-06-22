@@ -21,18 +21,19 @@
 
 typedef struct	s_waiter
 {
-	int					nthread;
+	int				nthread;
 	long				tdie;
 	long				teat;
 	long				tsleep;
-	int					ntoeat;
+	int				ntoeat;
 	long				*tdie2;
 	long				*nb_eat;
 	long				*last_eat;
-	pthread_mutex_t		*fork;
-	pthread_mutex_t		*display;
-	int					id;
-	int					*fn;
+	pthread_mutex_t			*fork;
+	pthread_mutex_t			*display;
+	int				id;
+	int				*fn;
+	int				*dead;
 }				t_waiter;
 long			*ft_tdie(int nthread, long tdie);
 long			*ft_nb_eat(int nthread);
