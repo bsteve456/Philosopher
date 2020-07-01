@@ -5,10 +5,12 @@ void	*dinner(void *arg)
 	t_waiter *waiter;
 
 	waiter = arg;
-	pthread_mutex_lock(waiter->display);
+//	pthread_mutex_lock(waiter->display);
+	waiter->display2[waiter->id - 1] = 5;
 	waiter->last_eat[waiter->id - 1] = utime();
-	is_thinking(waiter->id, waiter->last_eat[waiter->id - 1]);
-	pthread_mutex_unlock(waiter->display);
+	usleep(200 * waiter->id);
+//	is_thinking(waiter->id, waiter->last_eat[waiter->id - 1]);
+//	pthread_mutex_unlock(waiter->display);
 	while(1)
 	{
 		if(lock_fork(waiter) == 1)
@@ -19,11 +21,13 @@ void	*dinner(void *arg)
 		if(unlock_fork(waiter) == 1)
 			break;
 		usleep(waiter->tsleep);
-		if(*(waiter->dead) == 1)
+		if(philo_state(waiter, 1, 0) == 1)
 			break;
-		pthread_mutex_lock(waiter->display);
+		waiter->display2[waiter->id - 1] = 5;
+//		usleep(100);
+/*		pthread_mutex_lock(waiter->display);
 		is_thinking(waiter->id, utime());
-		pthread_mutex_unlock(waiter->display);
+		pthread_mutex_unlock(waiter->display);*/
 	}
 	return (NULL);
 }
@@ -42,18 +46,18 @@ pthread_mutex_t **init_mutex_tab(char **av)
 
 void	monitoring_loop(t_waiter *waiter)
 {
-	int i;
-	long n;
+//	int i;
+//	long n;
 	long time;
 	while(1)
 	{
-		i = 0;
+//		i = 0;
 //		time = utime();
-		pthread_mutex_lock(waiter->display);
-	time = utime();
+//		pthread_mutex_lock(waiter->display);
+		time = utime();
 //		printf("time : %ld\n", utime());
-		pthread_mutex_unlock(waiter->display);
-		while(i < waiter->nthread)
+//		pthread_mutex_unlock(waiter->display);
+/*		while(i < waiter->nthread)
 		{
 			n = time - waiter->last_eat[i];
 			if (n >= waiter->tdie)
@@ -65,7 +69,11 @@ void	monitoring_loop(t_waiter *waiter)
 				return;
 			}
 			i++;
-		}
+		}*/
+		display_all_msg(waiter, time);
+		if(philo_state(waiter, 0, time) == 1)
+				return ;
+//		display_all_msg(waiter, time);
 	}
 }
 
@@ -76,16 +84,15 @@ int main(int ac, char **av)
 	int			i;
 	pthread_t	*tid;
 	pthread_mutex_t **mutex;
-	int		*dead;
 
 	i = 0;
 	if(ac >= 5 && ft_atoi(av[1]) > 0)
 	{
 		if (!(tid = (pthread_t *)malloc(sizeof(pthread_t) * ft_atoi(av[1]) + 1)))
 			return (0);
-		if (!(dead = (int *)malloc(sizeof(int) * 1)))
-			return (0);
-		*dead = 0;
+//		if (!(dead = (int *)malloc(sizeof(int) * 1)))
+//			return (0);
+//		*dead = 0;
 		tab = init_tab(av);
 		mutex = init_mutex_tab(av);
 		while(i < ft_atoi(av[1]))
@@ -94,7 +101,7 @@ int main(int ac, char **av)
 			waiter->fork = mutex[0];
 			waiter->display = mutex[1];
 			waiter->last_eat[waiter->id - 1] = utime();
-			waiter->dead = dead;
+//			waiter->dead = dead;
 			pthread_create(&tid[i], NULL, &dinner, (void *)(waiter));
 			pthread_detach(tid[i++]);
 		}

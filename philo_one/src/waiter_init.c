@@ -38,6 +38,7 @@ long				**init_tab(char **av)
 		return (0);
 	res[2] = ft_nb_eat(ft_atoi(av[1]));
 	res[3] = ft_last_eat(ft_atoi(av[1]));
+	res[1] = ft_nb_eat(ft_atoi(av[1]));
 	return (res);
 }
 
@@ -62,6 +63,7 @@ t_waiter		*init_waiter(char **av, long **tab, int i, int ac)
 	waiter->tdie = ft_atoi(av[2]);
 	waiter->teat = ft_atoi(av[3]) * 1000;
 	waiter->tsleep = ft_atoi(av[4]) * 1000;
+	waiter->display2 = tab[1];
 	waiter->nb_eat = tab[2];
 	waiter->last_eat = tab[3];
 	waiter->fn = fork_number_init(i + 1, waiter->nthread);

@@ -29,6 +29,7 @@ typedef struct	s_waiter
 	long				*tdie2;
 	long				*nb_eat;
 	long				*last_eat;
+	long					*display2;
 	pthread_mutex_t			*fork;
 	pthread_mutex_t			*display;
 	int				id;
@@ -44,7 +45,7 @@ int			fork_number(int id, int pos, int last);
 int			ft_atoi(const char *str);
 long			utime(void);
 pthread_mutex_t		*init_mutex(int n);
-int			philo_state(t_waiter *waiter);
+int			philo_state(t_waiter *waiter, int thread, long time);
 void			ft_putnbr(long n);
 void			ft_putstr(char *s);
 void			dis_utils(long time, int id);
@@ -56,4 +57,5 @@ void			is_eating(int id, long time);
 void			is_sleeping(int id, long time);
 void			is_thinking(int id, long time);
 void			is_dead(int id, long time);
+void			display_all_msg(t_waiter *waiter, long time);
 #endif

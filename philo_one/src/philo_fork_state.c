@@ -12,37 +12,27 @@
 
 #include "philo_one.h"
 
-int check_other_philo(t_waiter *waiter)
-{
-	int i;
-	long time;
-
-	i = 0;
-	time = utime();
-	while (i < waiter->nthread)
-	{
-		if (time - waiter->last_eat[i] >= waiter->tdie)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-int	philo_state(t_waiter *waiter)
+int	philo_state(t_waiter *waiter, int thread, long time)
 {
 	static int	ndie = 0;
 	long n;
+	int i;
 
-	if(ndie >= 1)
-		return (1);
-	n = utime() - waiter->last_eat[waiter->id - 1];
-	if(ndie == 0 && n >= waiter->tdie)
+	if(thread == 1)
+		return (ndie);
+	i = 0;
+	while(i < waiter->nthread)
 	{
-		ndie++;
-		pthread_mutex_lock(waiter->display);
-		is_dead(waiter->id, utime());
-		pthread_mutex_unlock(waiter->display);
-		return (1);
+		n = time - waiter->last_eat[i];
+		if (n >= waiter->tdie)
+		{
+			ndie = 1;
+			//pthread_mutex_lock(waiter->display);
+			is_dead(i + 1, time);
+			//pthread_mutex_unlock(waiter->display);
+			return (ndie);
+		}
+		i++;
 	}
 	return (0);
 }
