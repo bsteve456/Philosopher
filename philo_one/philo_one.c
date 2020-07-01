@@ -8,7 +8,7 @@ void	*dinner(void *arg)
 //	pthread_mutex_lock(waiter->display);
 	waiter->display2[waiter->id - 1] = 5;
 	waiter->last_eat[waiter->id - 1] = utime();
-	usleep(200 * waiter->id);
+	usleep(300 * waiter->id);
 //	is_thinking(waiter->id, waiter->last_eat[waiter->id - 1]);
 //	pthread_mutex_unlock(waiter->display);
 	while(1)
@@ -70,10 +70,9 @@ void	monitoring_loop(t_waiter *waiter)
 			}
 			i++;
 		}*/
-		display_all_msg(waiter, time);
 		if(philo_state(waiter, 0, time) == 1)
 				return ;
-//		display_all_msg(waiter, time);
+		display_all_msg(waiter, time);
 	}
 }
 

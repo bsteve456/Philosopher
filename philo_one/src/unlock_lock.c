@@ -20,7 +20,7 @@ int		lock_fork(t_waiter *waiter)
 		pthread_mutex_unlock(&(waiter->fork[waiter->fn[0]]));
 		return (1);
 	}
-	waiter->display2[waiter->id - 1] = 1;
+	waiter->display2[waiter->id - 1] += 1;
 //	usleep(200);
 /*	pthread_mutex_lock(waiter->display);
 	has_afork(waiter->id, utime());
@@ -40,7 +40,7 @@ int		lock_fork2(t_waiter *waiter)
 		pthread_mutex_unlock(&(waiter->fork[waiter->fn[1]]));
 		return (1);
 	}
-//	waiter->last_eat[waiter->id - 1] = utime();
+	waiter->last_eat[waiter->id - 1] = utime();
 	waiter->display2[waiter->id - 1] += 2;
 //	usleep(200);
 /*	pthread_mutex_lock(waiter->display);
@@ -53,8 +53,8 @@ int		lock_fork2(t_waiter *waiter)
 
 int		unlock_fork(t_waiter *waiter)
 {
-	pthread_mutex_unlock(&(waiter->fork[waiter->fn[1]]));
 	pthread_mutex_unlock(&(waiter->fork[waiter->fn[0]]));
+	pthread_mutex_unlock(&(waiter->fork[waiter->fn[1]]));
 	waiter->nb_eat[waiter->id - 1] += 1;
 	if (waiter->ntoeat != -1 && waiter->nb_eat[waiter->id - 1] == waiter->ntoeat)
 		return (1);

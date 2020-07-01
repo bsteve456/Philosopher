@@ -72,6 +72,7 @@ void	display_all_msg(t_waiter *waiter, long time)
 	i = 0;
 	while(i < waiter->nthread)
 	{
+		usleep(500);
 		if (waiter->display2[i] == 1)
 			has_afork(i + 1, time);
 		else if (waiter->display2[i] == 2)
@@ -79,11 +80,22 @@ void	display_all_msg(t_waiter *waiter, long time)
 			is_eating(i + 1, time);
 			waiter->last_eat[i] = time;
 		}
-		if(waiter->display2[i] == 3)
+		else if(waiter->display2[i] == 3)
 		{
 			has_afork(i + 1, time);
 			is_eating(i + 1, time);
 			waiter->last_eat[i] = time;
+		}
+		else if (waiter->display2[i] == 6)
+		{
+			is_thinking(i + 1, time);
+			has_afork(i + 1, time);
+		}
+		else if (waiter->display2[i] == 8)
+		{
+			is_thinking(i + 1, time);
+			has_afork(i + 1, time);
+			is_eating(i + 1, time);
 		}
 		else if (waiter->display2[i] == 4)
 			is_sleeping(i + 1, time);
