@@ -70,9 +70,10 @@ void	display_all_msg(t_waiter *waiter, long time)
 	int i;
 
 	i = 0;
+	usleep(500);
 	while(i < waiter->nthread)
 	{
-		usleep(500);
+	//	usleep(500);
 		if (waiter->display2[i] == 1)
 			has_afork(i + 1, time);
 		else if (waiter->display2[i] == 2)
