@@ -15,8 +15,8 @@
 int	philo_state(t_waiter *waiter, int thread, long time)
 {
 	static int	ndie = 0;
-	long n;
-	int i;
+	static	long n = 0;
+	static 	int i = 0;
 
 	if(thread == 1)
 		return (ndie);

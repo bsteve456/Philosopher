@@ -20,6 +20,7 @@ FILES=philo_one.c \
 		src/waiter_init.c \
 		src/philo_fork_state.c \
 		src/philo_utils.c \
+		src/philo_utils2.c \
 		src/unlock_lock.c \
 		src/display.c
 OBJ=$(FILES:.c=.o)
