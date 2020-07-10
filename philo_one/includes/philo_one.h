@@ -17,7 +17,8 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
-
+# include <string.h>
+# define RESET 10000
 typedef struct	s_msg
 {
 	int					id;
@@ -40,9 +41,11 @@ typedef struct	s_waiter
 	pthread_mutex_t			*fork;
 	pthread_mutex_t			*display;
 	int				id;
+	int				j;
 	int				*fn;
 	int				*dead;
 	t_msg			*msg;
+	char			**tab;
 }				t_waiter;
 long			*ft_tdie(int nthread, long tdie);
 long			*ft_nb_eat(int nthread);
@@ -69,4 +72,5 @@ void			display_all_msg(t_waiter *waiter, long time);
 void			display_msg(int id, int msg, long time, t_waiter *waiter);
 t_msg			*msgnew(int id, int msg, long time);
 void			msgadd_back(t_waiter *waiter, t_msg *new);
+void			*ft_calloc(size_t count, size_t size);
 #endif

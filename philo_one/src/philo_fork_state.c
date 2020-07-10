@@ -17,18 +17,24 @@ int	philo_state(t_waiter *waiter, int thread, long time)
 	static int	ndie = 0;
 	static	long n = 0;
 	static 	int i = 0;
+	static	long time1 = 0;
 
+	(void)time;
 	if(thread == 1)
 		return (ndie);
 	i = 0;
+//	pthread_mutex_lock(waiter->display);
+	time1 = utime();
+//	pthread_mutex_unlock(waiter->display);
 	while(i < waiter->nthread)
 	{
-		n = time - waiter->last_eat[i];
+		n = time1 - waiter->last_eat[i];
 		if (n >= waiter->tdie)
 		{
 			ndie = 1;
 			//pthread_mutex_lock(waiter->display);
-			is_dead(i + 1, time);
+			printf("%ld\n", waiter->last_eat[i]);
+			is_dead(i + 1, time1);
 			//pthread_mutex_unlock(waiter->display);
 			return (ndie);
 		}

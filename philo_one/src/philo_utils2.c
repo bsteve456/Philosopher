@@ -8,7 +8,7 @@ void	display_msg(int id, int msg, long time, t_waiter *waiter)
 		else if (msg == 2)
 		{
 			is_eating(id, time);
-//			waiter->last_eat[id - 1] = time;
+			waiter->last_eat[id - 1] = time;
 		}
 		else if (msg == 4)
 			is_sleeping(id, time);
@@ -43,4 +43,15 @@ void	msgadd_back(t_waiter *waiter, t_msg *new)
 		last_msg->next = new;
 		last_msg = new;
 	}
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	unsigned char *data;
+
+	if (!(data = (unsigned char *)malloc(size * count)))
+		return (NULL);
+//	ft_bzero((void *)data, size*count);
+	memset((void *)data, 0, size * count);
+	return (data);
 }

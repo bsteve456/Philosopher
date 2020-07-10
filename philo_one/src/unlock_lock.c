@@ -15,32 +15,54 @@
 int		lock_fork(t_waiter *waiter)
 {
 	pthread_mutex_lock(&(waiter->fork[waiter->fn[0]]));
-	if (philo_state(waiter, 1, 0) == 1)
+/*	if (philo_state(waiter, 1, 0) == 1)
 	{
 		pthread_mutex_unlock(&(waiter->fork[waiter->fn[0]]));
 		return (1);
-	}
-	pthread_mutex_lock(waiter->display);
+	}*/
+/*	pthread_mutex_lock(waiter->display);
 	msgadd_back(waiter, msgnew(waiter->id, 1, utime()));
 //	waiter->msg = waiter->msg->next;
-	pthread_mutex_unlock(waiter->display);
+	pthread_mutex_unlock(waiter->display);*/
+	waiter->tab[waiter->id - 1][waiter->j] = 1;
+	waiter->j += 1;
+	if(waiter->j == RESET)
+	{
+		waiter->tab[waiter->id - 1] = ft_calloc(sizeof(char *), RESET);
+		waiter->j = 0;
+		write(1, "ok\n", 4);
+
+	}
 	return (0);
 }
 
 int		lock_fork2(t_waiter *waiter)
 {
 	pthread_mutex_lock(&(waiter->fork[waiter->fn[1]]));
-	if (philo_state(waiter, 1, 0) == 1)
+/*	if (philo_state(waiter, 1, 0) == 1)
 	{
 		pthread_mutex_unlock(&(waiter->fork[waiter->fn[0]]));
 		pthread_mutex_unlock(&(waiter->fork[waiter->fn[1]]));
 		return (1);
-	}
-	pthread_mutex_lock(waiter->display);
+	}*/
+/*	pthread_mutex_lock(waiter->display);
 	msgadd_back(waiter, msgnew(waiter->id, 2, utime()));
 	waiter->last_eat[waiter->id - 1] = utime();
 //	waiter->msg = waiter->msg->next;
-	pthread_mutex_unlock(waiter->display);
+	pthread_mutex_unlock(waiter->display);*/
+	waiter->tab[waiter->id - 1][waiter->j] = 2;
+	waiter->j += 1;
+//	pthread_mutex_lock(waiter->display);
+	waiter->last_eat[waiter->id - 1] = utime();
+//	pthread_mutex_unlock(waiter->display);
+
+	if(waiter->j == RESET)
+	{
+		waiter->tab[waiter->id - 1] = ft_calloc(sizeof(char *), RESET);
+		waiter->j = 0;
+		write(1, "ok\n", 4);
+
+	}
 	return (0);
 }
 
@@ -51,11 +73,19 @@ int		unlock_fork(t_waiter *waiter)
 	waiter->nb_eat[waiter->id - 1] += 1;
 	if (waiter->ntoeat != -1 && waiter->nb_eat[waiter->id - 1] == waiter->ntoeat)
 		return (1);
-	if (philo_state(waiter, 1, 0) == 1)
-		return (1);
-	pthread_mutex_lock(waiter->display);
+//	if (philo_state(waiter, 1, 0) == 1)
+//		return (1);
+/*	pthread_mutex_lock(waiter->display);
 	msgadd_back(waiter, msgnew(waiter->id, 4, utime()));
 //	waiter->msg = waiter->msg->next;
-	pthread_mutex_unlock(waiter->display);
+	pthread_mutex_unlock(waiter->display);*/
+	waiter->tab[waiter->id - 1][waiter->j] = 4;
+	waiter->j += 1;
+	if(waiter->j == RESET)
+	{
+		waiter->tab[waiter->id - 1] = ft_calloc(sizeof(char *), RESET);
+		waiter->j = 0;
+		write(1, "ok\n", 4);
+	}
 	return (0);
 }
