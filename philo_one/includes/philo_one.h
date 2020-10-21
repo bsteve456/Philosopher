@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 14:52:41 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/18 19:55:04 by blacking         ###   ########.fr       */
+/*   Updated: 2020/10/21 10:36:48 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ void			display_msg(int id, int msg, long time, t_waiter *waiter);
 //void			msgadd_back(t_waiter *waiter, t_msg *new);
 void			*ft_calloc(size_t count, size_t size);
 t_msg			*fill_msg();
-
+void			usleep_eat(t_waiter *waiter);
+void			usleep_sleep(t_waiter *waiter);
 #endif

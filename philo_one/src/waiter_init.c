@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/18 19:44:55 by blacking         ###   ########.fr       */
+/*   Updated: 2020/10/21 10:53:47 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ t_waiter		*init_waiter(char **av, long **tab, int i, int ac)
 		return (0);
 	waiter->nthread = ft_atoi(av[1]);
 	waiter->tdie = ft_atoi(av[2]);
-	waiter->teat = ft_atoi(av[3]) * 1000;
-	waiter->tsleep = ft_atoi(av[4]) * 1000;
+	waiter->teat = ft_atoi(av[3]);
+	waiter->tsleep = ft_atoi(av[4]);
 	waiter->display2 = tab[1];
 	waiter->nb_eat = tab[2];
 	waiter->last_eat = tab[3];

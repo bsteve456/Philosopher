@@ -12,7 +12,8 @@ void	*dinner(void *arg)
 /*	pthread_mutex_lock(waiter->display);
 	msgadd_back(waiter, msgnew(waiter->id, 5, utime()));
 	pthread_mutex_unlock(waiter->display);*/
-	usleep(100 * waiter->id);
+	if (waiter->id % 2 == 0)
+		usleep(60 * 100);
 	while(1)
 	{
 //		if(lock_fork(waiter) == 1)
@@ -21,11 +22,14 @@ void	*dinner(void *arg)
 //		if(lock_fork2(waiter) == 1)
 //			break;
 		lock_fork2(waiter);
-		usleep(waiter->teat);
+//		usleep(waiter->teat);
+		usleep_eat(waiter);
 //		if(unlock_fork(waiter) == 1)
 //			break;
 		unlock_fork(waiter);
-		usleep(waiter->tsleep);
+//		usleep(waiter->tsleep);
+		usleep_sleep(waiter);
+
 //		if(philo_state(waiter, 1, 0) == 1)
 //			break;
 /*		pthread_mutex_lock(waiter->display);
@@ -108,7 +112,7 @@ void	monitoring_loop(t_waiter *waiter)
 	{
 //		pthread_mutex_lock(waiter->display);
 		time = utime();
-		check_state(waiter, msg, time);
+//		check_state(waiter, msg, time);
 //		pthread_mutex_unlock(waiter->display);
 		if(philo_state(waiter, 0, time) == 1)
 				return ;
