@@ -13,7 +13,7 @@ void	*dinner(void *arg)
 	msgadd_back(waiter, msgnew(waiter->id, 5, utime()));
 	pthread_mutex_unlock(waiter->display);*/
 	if (waiter->id % 2 == 0)
-		usleep(60 * 100);
+		usleep(60);
 	while(1)
 	{
 //		if(lock_fork(waiter) == 1)
@@ -70,15 +70,15 @@ void	check_state(t_waiter *waiter, char *msg, long time)
 	long tsleep;
 
 	last = waiter->last_eat;
-	teat = waiter->teat / 1000;
-	tsleep = waiter->tsleep / 1000;
+	teat = waiter->teat;
+	tsleep = waiter->tsleep;
 	i = 0;
 	while (i < waiter->nthread)
 	{
-		if (msg[i] == 2 && last[i] + teat + 3 < time)
-			printf("[last :%ld time : %ld] %d eat too long\n", last[i], time ,i + 1);
-		else if (msg[i] == 4 && last[i] + teat + tsleep + 3 < time)
-			printf("[last :%ld time : %ld] %d sleep too long\n", last[i], time ,i + 1);
+		if (msg[i] == 2 && last[i] + teat + 1 < time)
+			printf("[last :%ld eat:%ld time : %ld] %d eat too long\n", last[i], teat ,time ,i + 1);
+		else if (msg[i] == 4 && last[i] + teat + tsleep + 1 < time)
+			printf("[last :%ld tsleep: %ld time : %ld] %d sleep too long\n", last[i], tsleep, time ,i + 1);
 		i++;
 	}
 }
@@ -113,7 +113,7 @@ void	monitoring_loop(t_waiter *waiter)
 	{
 //		pthread_mutex_lock(waiter->display);
 		time = utime();
-//		check_state(waiter, msg, time);
+		check_state(waiter, msg, time);
 //		pthread_mutex_unlock(waiter->display);
 		if(philo_state(waiter, 0, time) == 1)
 				return ;
@@ -142,7 +142,7 @@ void	monitoring_loop(t_waiter *waiter)
 			}
 			i++;
 		}
-		usleep(1000);
+		usleep(500);
 	}
 }
 
