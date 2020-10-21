@@ -26,7 +26,8 @@ void	*dinner(void *arg)
 		usleep_eat(waiter);
 //		if(unlock_fork(waiter) == 1)
 //			break;
-		unlock_fork(waiter);
+		if (unlock_fork(waiter) == 1)
+			break;
 //		usleep(waiter->tsleep);
 		usleep_sleep(waiter);
 
