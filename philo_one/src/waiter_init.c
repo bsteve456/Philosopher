@@ -77,14 +77,11 @@ t_waiter		*init_waiter(char **av, long **tab, int i, int ac)
 
 long	utime()
 {
-//	static pthread_mutex_t res = PTHREAD_MUTEX_INITIALIZER;
 	static struct timeval time;
 	static long time_m = 0;
 
-//	pthread_mutex_lock(&res);
 	gettimeofday(&time, NULL);
 	time_m = (time.tv_sec) * 1000 + (time.tv_usec) / 1000;
-//pthread_mutex_unlock(&res);
 	return (time_m);
 }
 

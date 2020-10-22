@@ -23,9 +23,7 @@ int	philo_state(t_waiter *waiter, int thread, long time)
 	if(thread == 1)
 		return (ndie);
 	i = 0;
-//	pthread_mutex_lock(waiter->display);
 	time1 = utime();
-//	pthread_mutex_unlock(waiter->display);
 	while (waiter->ntoeat != -1  &&
 	waiter->nb_eat[waiter->id - 1] >= waiter->ntoeat && i < waiter->nthread)
 		i++;
@@ -40,10 +38,8 @@ int	philo_state(t_waiter *waiter, int thread, long time)
 			if (n >= waiter->tdie)
 			{
 				ndie = 1;
-				//pthread_mutex_lock(waiter->display);
 				printf("%ld\n", waiter->last_eat[i]);
 				is_dead(i + 1, time1);
-				//pthread_mutex_unlock(waiter->display);
 				return (ndie);
 			}
 		}

@@ -9,33 +9,16 @@ void	*dinner(void *arg)
 	waiter->msg[waiter->id - 1][waiter->j].msg = 5;
 	waiter->msg[waiter->id - 1][waiter->j].time = utime();
 	waiter->j += 1;
-/*	pthread_mutex_lock(waiter->display);
-	msgadd_back(waiter, msgnew(waiter->id, 5, utime()));
-	pthread_mutex_unlock(waiter->display);*/
 	if (waiter->id % 2 == 0)
 		usleep(60);
 	while(1)
 	{
-//		if(lock_fork(waiter) == 1)
-//			break;
 		lock_fork(waiter);
-//		if(lock_fork2(waiter) == 1)
-//			break;
 		lock_fork2(waiter);
-//		usleep(waiter->teat);
 		usleep_eat(waiter);
-//		if(unlock_fork(waiter) == 1)
-//			break;
 		if (unlock_fork(waiter) == 1)
 			break;
-//		usleep(waiter->tsleep);
 		usleep_sleep(waiter);
-
-//		if(philo_state(waiter, 1, 0) == 1)
-//			break;
-/*		pthread_mutex_lock(waiter->display);
-		msgadd_back(waiter, msgnew(waiter->id, 5, utime()));
-		pthread_mutex_unlock(waiter->display);*/
 		waiter->msg[waiter->id - 1][waiter->j].msg = 5;
 		waiter->msg[waiter->id - 1][waiter->j].time = utime();
 		waiter->j += 1;
@@ -85,8 +68,6 @@ void	check_state(t_waiter *waiter, char *msg, long time)
 
 void	monitoring_loop(t_waiter *waiter)
 {
-//	t_msg *lst;
-//	t_msg *mem;
 	t_msg **tab;
 	long time;
 	int	i;
@@ -94,8 +75,6 @@ void	monitoring_loop(t_waiter *waiter)
 	int j;
 	char *msg;
 
-//	lst = waiter->msg;
-//	mem = 0;
 	if (!(tab = (t_msg **)malloc(sizeof(t_msg *) * waiter->nthread)))
 		return ;
 	if (!(msg = ft_calloc(sizeof(char), waiter->nthread)))
@@ -111,19 +90,10 @@ void	monitoring_loop(t_waiter *waiter)
 	}
 	while(1)
 	{
-//		pthread_mutex_lock(waiter->display);
 		time = utime();
 		check_state(waiter, msg, time);
-//		pthread_mutex_unlock(waiter->display);
 		if(philo_state(waiter, 0, time) == 1)
 				return ;
-/*		if(lst->next != NULL)
-		{
-			free(mem);
-			display_msg(lst->id, lst->msg, lst->time, waiter);
-			mem = lst;
-			lst = lst->next;
-		}i*/
 		i = 0;
 		while (i < waiter->nthread)
 		{
@@ -154,23 +124,17 @@ int main(int ac, char **av)
 	pthread_t	*tid;
 	pthread_mutex_t **mutex;
 	t_msg		**tab2;
-//	char 		**tab1;
 
 	i = 0;
 	if(ac >= 5 && ft_atoi(av[1]) > 0)
 	{
 		if (!(tid = (pthread_t *)malloc(sizeof(pthread_t) * ft_atoi(av[1]) + 1)))
 			return (0);
-//		if(!(tab1 = (char **)malloc(sizeof(char *) * ft_atoi(av[1]))))
-//			return (0);
 		if(!(tab2 = (t_msg **)malloc(sizeof(t_msg *) * ft_atoi(av[1]))))
 			return (0);
-//		while (i < ft_atoi(av[1]))
-//			tab1[i++] = ft_calloc(sizeof(char *), RESET);
 		while (i < ft_atoi(av[1]))
 			tab2[i++] = fill_msg();
 		i = 0;
-//		lst = msgnew(0, 0, 0);
 		tab = init_tab(av);
 		mutex = init_mutex_tab(av);
 		while(i < ft_atoi(av[1]))
@@ -181,7 +145,6 @@ int main(int ac, char **av)
 			waiter->last_eat[waiter->id - 1] = utime();
 			waiter->msg = tab2;
 			waiter->j = 0;
-//			waiter->tab = tab1;
 			pthread_create(&tid[i], NULL, &dinner, (void *)(waiter));
 			pthread_detach(tid[i++]);
 		}

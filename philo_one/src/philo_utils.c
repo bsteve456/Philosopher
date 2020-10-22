@@ -65,63 +65,6 @@ int	ft_atoi(const char *str)
 	return (number * negative);
 }
 
-void	display_all_msg(t_waiter *waiter, long time)
-{
-	(void)waiter;
-	(void)time;
-/*	int i;
-//	int display;
-
-	i = 0;
-	usleep(500);
-	while(i < waiter->nthread)
-	{
-		display = waiter->display2[i];
-	//	usleep(500);
-		if (display == 1)
-			has_afork(i + 1, time);
-		else if (display == 2)
-		{
-			is_eating(i + 1, time);
-			waiter->last_eat[i] = time;
-		}
-		else if(display == 3)
-		{
-			has_afork(i + 1, time);
-			is_eating(i + 1, time);
-			waiter->last_eat[i] = time;
-		}
-		else if (display == 4)
-			is_sleeping(i + 1, time);
-		else if (display == 5)
-			is_thinking(i + 1, time);
-		else if (display == 6)
-		{
-			is_thinking(i + 1, time);
-			has_afork(i + 1, time);
-		}
-		else if (display == 8)
-		{
-			is_thinking(i + 1, time);
-			has_afork(i + 1, time);
-			is_eating(i + 1, time);
-		}
-		else if (display == 12)
-		{
-			is_thinking(i + 1, time);
-			has_afork(i + 1, time);
-			is_eating(i + 1, time);
-			is_sleeping(i + 1, time);
-		}
-		waiter->display2[i] = 0;
-		display_msg(i, time, waiter);
-		i++;
-		if (i < waiter->nthread)
-			display_msg(i, time, waiter);
-		i++;
-	}*/
-}
-
 void	dis_utils(long time, int id)
 {
 	ft_putnbr(time);
