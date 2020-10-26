@@ -19,7 +19,6 @@ int	philo_state(t_waiter *waiter, int thread, long time)
 	static 	int i = 0;
 	static	long time1 = 0;
 
-	(void)time;
 	if(thread == 1)
 		return (ndie);
 	i = 0;
@@ -38,8 +37,8 @@ int	philo_state(t_waiter *waiter, int thread, long time)
 			if (n >= waiter->tdie)
 			{
 				ndie = 1;
-				printf("%ld\n", waiter->last_eat[i]);
-				is_dead(i + 1, time1);
+				printf("%ld\n", waiter->last_eat[i] - time);
+				is_dead(i + 1, time1 - time);
 				return (ndie);
 			}
 		}

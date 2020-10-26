@@ -74,14 +74,3 @@ t_waiter		*init_waiter(char **av, long **tab, int i, int ac)
 	waiter->id = (intptr_t)(i + 1);
 	return (waiter);
 }
-
-long	utime()
-{
-	static struct timeval time;
-	static long time_m = 0;
-
-	gettimeofday(&time, NULL);
-	time_m = (time.tv_sec) * 1000 + (time.tv_usec) / 1000;
-	return (time_m);
-}
-

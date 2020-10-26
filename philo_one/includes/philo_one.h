@@ -68,8 +68,6 @@ void			is_thinking(int id, long time);
 void			is_dead(int id, long time);
 void			display_all_msg(t_waiter *waiter, long time);
 void			display_msg(int id, int msg, long time, t_waiter *waiter);
-//t_msg			*msgnew(int id, int msg, long time);
-//void			msgadd_back(t_waiter *waiter, t_msg *new);
 void			*ft_calloc(size_t count, size_t size);
 t_msg			*fill_msg();
 void			usleep_eat(t_waiter *waiter);

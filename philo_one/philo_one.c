@@ -3,8 +3,10 @@
 void	*dinner(void *arg)
 {
 	t_waiter *waiter;
+	long start;
 
 	waiter = arg;
+	start = utime();
 
 	waiter->msg[waiter->id - 1][waiter->j].msg = 5;
 	waiter->msg[waiter->id - 1][waiter->j].time = utime();
@@ -28,7 +30,7 @@ void	*dinner(void *arg)
 			waiter->j = 0;
 			write(1, "ok\n", 4);
 		}
-		if(philo_state(waiter, 1, 0) == 1)
+		if (philo_state(waiter, 1, start) == 1)
 			break;
 	}
 	return (NULL);
@@ -58,9 +60,9 @@ void	check_state(t_waiter *waiter, char *msg, long time)
 	i = 0;
 	while (i < waiter->nthread)
 	{
-		if (msg[i] == 2 && last[i] + teat + 1 < time)
+		if (msg[i] == 2 && last[i] + teat < time)
 			printf("[last :%ld eat:%ld time : %ld] %d eat too long\n", last[i], teat ,time ,i + 1);
-		else if (msg[i] == 4 && last[i] + teat + tsleep + 1 < time)
+		else if (msg[i] == 4 && last[i] + teat + tsleep < time)
 			printf("[last :%ld tsleep: %ld time : %ld] %d sleep too long\n", last[i], tsleep, time ,i + 1);
 		i++;
 	}
@@ -69,10 +71,11 @@ void	check_state(t_waiter *waiter, char *msg, long time)
 void	monitoring_loop(t_waiter *waiter)
 {
 	t_msg **tab;
-	long time;
+//	long time;
 	int	i;
 	int *pos;
 	int j;
+	long start_time;
 	char *msg;
 
 	if (!(tab = (t_msg **)malloc(sizeof(t_msg *) * waiter->nthread)))
@@ -82,6 +85,7 @@ void	monitoring_loop(t_waiter *waiter)
 	if(!(pos = (int *)malloc(sizeof(int) * waiter->nthread)))
 		return ;
 	i = 0;
+	start_time = utime();
 	while(i < waiter->nthread)
 	{
 		tab[i] = waiter->msg[i];
@@ -90,9 +94,9 @@ void	monitoring_loop(t_waiter *waiter)
 	}
 	while(1)
 	{
-		time = utime();
-		check_state(waiter, msg, time);
-		if(philo_state(waiter, 0, time) == 1)
+//		time = utime();
+//		check_state(waiter, msg, time);
+		if(philo_state(waiter, 0, start_time) == 1)
 				return ;
 		i = 0;
 		while (i < waiter->nthread)
@@ -101,7 +105,7 @@ void	monitoring_loop(t_waiter *waiter)
 			if(tab[i][j].msg != 0 && tab[i][j].time != 0)
 			{
 				msg[i] = tab[i][j].msg;
-				display_msg(i + 1, tab[i][j].msg, tab[i][j].time, waiter);
+				display_msg(i + 1, tab[i][j].msg, tab[i][j].time - start_time, waiter);
 				pos[i] = j + 1;
 			}
 			if(pos[i] == RESET)
@@ -112,7 +116,7 @@ void	monitoring_loop(t_waiter *waiter)
 			}
 			i++;
 		}
-		usleep(500);
+		usleep(1000);
 	}
 }
 
