@@ -12,7 +12,7 @@ void	*dinner(void *arg)
 	waiter->msg[waiter->id - 1][waiter->j].time = utime();
 	waiter->j += 1;
 	if (waiter->id % 2 == 0)
-		usleep(60);
+		usleep(1000);
 	while(1)
 	{
 		lock_fork(waiter);
@@ -71,7 +71,7 @@ void	check_state(t_waiter *waiter, char *msg, long time)
 void	monitoring_loop(t_waiter *waiter)
 {
 	t_msg **tab;
-//	long time;
+	long time;
 	int	i;
 	int *pos;
 	int j;
@@ -94,8 +94,8 @@ void	monitoring_loop(t_waiter *waiter)
 	}
 	while(1)
 	{
-//		time = utime();
-//		check_state(waiter, msg, time);
+		time = utime();
+		check_state(waiter, msg, time);
 		if(philo_state(waiter, 0, start_time) == 1)
 				return ;
 		i = 0;
@@ -116,7 +116,7 @@ void	monitoring_loop(t_waiter *waiter)
 			}
 			i++;
 		}
-		usleep(1000);
+		usleep(5000);
 	}
 }
 
