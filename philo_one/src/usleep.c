@@ -21,14 +21,13 @@ void	usleep_eat(t_waiter *waiter)
 void	usleep_sleep(t_waiter *waiter)
 {
 	while (utime() < (waiter->last_eat[waiter->id - 1] + waiter->teat + waiter->tsleep))
-		usleep(1);
+		usleep(50);
 }
 
 long	utime()
 {
 	static struct timeval time;
-	static long time_m = 0;
 
-	time_m =	gettimeofday(&time, NULL);
-	 return (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000) + (time.tv_usec / 1000);
 }
