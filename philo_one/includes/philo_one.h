@@ -72,4 +72,6 @@ void			*ft_calloc(size_t count, size_t size);
 t_msg			*fill_msg();
 void			usleep_eat(t_waiter *waiter);
 void			usleep_sleep(t_waiter *waiter);
+void			usleep_ntime(int n);
+
 #endif

@@ -68,15 +68,14 @@ void	check_state(t_waiter *waiter, char *msg, long time)
 	}
 }
 
-void	monitoring_loop(t_waiter *waiter)
+void	monitoring_loop(t_waiter *waiter, long start_time)
 {
 	t_msg **tab;
-	long time;
 	int	i;
 	int *pos;
 	int j;
-	long start_time;
 	char *msg;
+	// long time;
 
 	if (!(tab = (t_msg **)malloc(sizeof(t_msg *) * waiter->nthread)))
 		return ;
@@ -85,17 +84,18 @@ void	monitoring_loop(t_waiter *waiter)
 	if(!(pos = (int *)malloc(sizeof(int) * waiter->nthread)))
 		return ;
 	i = 0;
-	start_time = utime();
 	while(i < waiter->nthread)
 	{
 		tab[i] = waiter->msg[i];
 		pos[i] = 0;
 		i++;
 	}
+	//usleep(2000);
+	usleep_ntime(20);
 	while(1)
 	{
-		time = utime();
-		check_state(waiter, msg, time);
+//		time = utime();
+//		check_state(waiter, msg, time);
 		if(philo_state(waiter, 0, start_time) == 1)
 				return ;
 		i = 0;
@@ -116,7 +116,9 @@ void	monitoring_loop(t_waiter *waiter)
 			}
 			i++;
 		}
-		usleep(5000);
+		usleep(10000);
+//		usleep_ntime(50);
+
 	}
 }
 
@@ -152,7 +154,7 @@ int main(int ac, char **av)
 			pthread_create(&tid[i], NULL, &dinner, (void *)(waiter));
 			pthread_detach(tid[i++]);
 		}
-		monitoring_loop(waiter);
+		monitoring_loop(waiter, utime());
 	}
 	return (0);
 }

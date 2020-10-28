@@ -24,6 +24,18 @@ void	usleep_sleep(t_waiter *waiter)
 		usleep(50);
 }
 
+void	usleep_ntime(int n)
+{
+	int i;
+	
+	i = 0;
+	while (i < n)
+	{
+		usleep(100);
+		i++;
+	}
+}
+
 long	utime()
 {
 	static struct timeval time;
