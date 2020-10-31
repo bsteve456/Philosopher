@@ -19,6 +19,8 @@
 # include <sys/time.h>
 # include <string.h>
 # define RESET 10000
+# define LEFT(X, Y)  (X % Y)
+# define RIGHT(X) (X - 1)
 typedef struct	s_msg
 {
 	int					msg;

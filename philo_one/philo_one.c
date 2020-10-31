@@ -3,21 +3,32 @@
 void	*dinner(void *arg)
 {
 	t_waiter *waiter;
+	static pthread_mutex_t *fork = 0;
 	long start;
 
 	waiter = arg;
+	if(fork == 0 && waiter->id - 1 == 0)
+	{
+		if (!(fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t ) * waiter->nthread)))
+			return (NULL);
+	}
+	else
+		usleep(1000);
 	start = utime();
-
 	waiter->msg[waiter->id - 1][waiter->j].msg = 5;
 	waiter->msg[waiter->id - 1][waiter->j].time = utime();
 	waiter->j += 1;
-	if (waiter->id % 2 == 0)
+	if ((waiter->id) % 2 == 0)
 		usleep(1000);
 	while(1)
 	{
+		pthread_mutex_lock(&(fork[LEFT(waiter->id, waiter->nthread)]));
 		lock_fork(waiter);
+		pthread_mutex_lock(&(fork[waiter->id - 1]));
 		lock_fork2(waiter);
 		usleep_eat(waiter);
+		pthread_mutex_unlock(&(fork[waiter->id - 1]));
+		pthread_mutex_unlock(&(fork[LEFT(waiter->id, waiter->nthread)]));
 		if (unlock_fork(waiter) == 1)
 			break;
 		usleep_sleep(waiter);
@@ -116,7 +127,7 @@ void	monitoring_loop(t_waiter *waiter, long start_time)
 			}
 			i++;
 		}
-		usleep(10000);
+		usleep(5000);
 //		usleep_ntime(50);
 
 	}
