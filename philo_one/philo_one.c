@@ -101,7 +101,6 @@ void	monitoring_loop(t_waiter *waiter, long start_time)
 		pos[i] = 0;
 		i++;
 	}
-	//usleep(2000);
 	usleep_ntime(20);
 	while(1)
 	{
@@ -128,8 +127,6 @@ void	monitoring_loop(t_waiter *waiter, long start_time)
 			i++;
 		}
 		usleep(5000);
-//		usleep_ntime(50);
-
 	}
 }
 

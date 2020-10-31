@@ -14,7 +14,6 @@
 
 int		lock_fork(t_waiter *waiter)
 {
-//	pthread_mutex_lock(&(waiter->fork[waiter->fn[0]]));
 	waiter->msg[waiter->id - 1][waiter->j].msg = 1;
 	waiter->msg[waiter->id - 1][waiter->j].time = utime();
 	waiter->j += 1;
@@ -33,7 +32,6 @@ int		lock_fork2(t_waiter *waiter)
 	long time;
 
 	time = utime();
-//	pthread_mutex_lock(&(waiter->fork[waiter->fn[1]]));
 	waiter->msg[waiter->id - 1][waiter->j].msg = 2;
 	waiter->msg[waiter->id - 1][waiter->j].time = time;
 	waiter->j += 1;
@@ -49,8 +47,6 @@ int		lock_fork2(t_waiter *waiter)
 
 int		unlock_fork(t_waiter *waiter)
 {
-//	pthread_mutex_unlock(&(waiter->fork[waiter->fn[0]]));
-//	pthread_mutex_unlock(&(waiter->fork[waiter->fn[1]]));
 	waiter->nb_eat[waiter->id - 1] += 1;
 	if (waiter->ntoeat != -1 && waiter->nb_eat[waiter->id - 1] == waiter->ntoeat)
 		return (1);
