@@ -126,7 +126,7 @@ void	monitoring_loop(t_waiter *waiter, long start_time)
 			}
 			i++;
 		}
-		usleep(5000);
+		usleep(8000);
 	}
 }
 
