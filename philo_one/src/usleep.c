@@ -14,15 +14,29 @@
 
 void	usleep_eat(t_waiter *waiter)
 {
-	while (utime() < (waiter->last_eat[waiter->id - 1] + waiter->teat))
-		usleep(50);
+//	static struct timespec req;
+//	(void)waiter;
+//	req.tv_sec = 0;
+//	req.tv_nsec = 200000000;
+//	while (utime() < (waiter->last_eat[waiter->id - 1] + waiter->teat))
+//		usleep(50);
+//		nanosleep(&req, NULL);
+		usleep(waiter->teat * 1000);
 }
 
 void	usleep_sleep(t_waiter *waiter)
 {
-	while (utime() < (waiter->last_eat[waiter->id - 1] + waiter->teat + waiter->tsleep))
-		usleep(50);
+//	static struct timespec req;
+//	(void)waiter;
+//	req.tv_sec = 0;
+//	req.tv_nsec = 200000000;
+//	while (utime() < (waiter->last_eat[waiter->id - 1] + waiter->teat + waiter->tsleep))
+//		usleep(50);
+//		nanosleep(&req, NULL);
+		usleep(waiter->tsleep * 1000);
+
 }
+
 
 void	usleep_ntime(int n)
 {

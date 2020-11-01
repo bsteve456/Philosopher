@@ -17,6 +17,8 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <time.h>
+
 # include <string.h>
 # define RESET 10000
 # define LEFT(X, Y)  (X % Y)

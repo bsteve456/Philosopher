@@ -86,6 +86,11 @@ void	monitoring_loop(t_waiter *waiter, long start_time)
 	int *pos;
 	int j;
 	char *msg;
+//	static struct timespec req;
+
+//	req.tv_sec = 0;
+//	req.tv_nsec = 5000000;
+
 	// long time;
 
 	if (!(tab = (t_msg **)malloc(sizeof(t_msg *) * waiter->nthread)))
@@ -126,7 +131,8 @@ void	monitoring_loop(t_waiter *waiter, long start_time)
 			}
 			i++;
 		}
-		usleep(8000);
+		usleep(5000);
+//		nanosleep(&req, NULL);
 	}
 }
 
