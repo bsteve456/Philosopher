@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 15:17:12 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 21:54:24 by blacking         ###   ########.fr       */
+/*   Updated: 2020/11/02 12:41:17 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,9 @@ int	fork_number(int id, int pos, int last)
 		return (id - 1);
 	else
 		return (id);
+}
+
+int	left(int x, int y)
+{
+	return (x % y);
 }
