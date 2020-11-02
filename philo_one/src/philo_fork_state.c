@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/02 15:18:09 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/02 15:23:20 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	mring_dis(t_msg **tab, int *pos, t_waiter *waiter)
 		j = pos[i];
 		if (tab[i][j].msg != 0 && tab[i][j].time != 0)
 		{
-			dis_msg(i + 1, tab[i][j].msg, tab[i][j].time - waiter->s, waiter);
+			dis_msg(i + 1, tab[i][j].msg, tab[i][j].time - waiter->s);
 			pos[i] = j + 1;
 		}
 		if (pos[i] == RESET)

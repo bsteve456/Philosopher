@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:35:20 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/02 15:16:20 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/02 15:21:34 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void				is_sleeping(int id, long time);
 void				is_thinking(int id, long time);
 void				is_dead(int id, long time, int *ndie);
 void				display_all_msg(t_waiter *waiter, long time);
-void				dis_msg(int id, int msg, long time, t_waiter *waiter);
+void				dis_msg(int id, int msg, long time);
 void				*ft_calloc(size_t count, size_t size);
 t_msg				*fill_msg();
 void				usleep_eat(t_waiter *waiter);
