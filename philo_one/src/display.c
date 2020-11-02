@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:25:54 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/18 19:54:37 by blacking         ###   ########.fr       */
+/*   Updated: 2020/11/02 13:21:33 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,4 @@ void	is_dead(int id, long time)
 {
 	dis_utils(time, id);
 	ft_putstr(" is died\n");
-}
-
-void	test(int id, long time)
-{
-	ft_putstr("test : ");
-	dis_utils(time, id);
-	write(1, "\n", 2);
 }

@@ -39,3 +39,20 @@ t_msg *fill_msg()
 	}
 	return (res);
 }
+
+void	init_pthread_tab(pthread_t **tid, t_msg ***tab, char *av)
+{
+	int i;
+	pthread_t *td;
+	t_msg **tab2;
+
+	i = 0;
+	if (!(td = (pthread_t *)malloc(sizeof(pthread_t) * ft_atoi(av) + 1)))
+		return ;
+	if (!(tab2 = (t_msg **)malloc(sizeof(t_msg *) * ft_atoi(av))))
+		return ;
+	while (i < ft_atoi(av))
+		tab2[i++] = fill_msg();
+	*tid = td;
+	*tab = tab2;
+}
