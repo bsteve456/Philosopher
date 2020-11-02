@@ -6,14 +6,13 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:26:27 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/19 17:09:56 by blacking         ###   ########.fr       */
+/*   Updated: 2020/11/02 15:29:29 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-
-void ft_putstr(char *s)
+void	ft_putstr(char *s)
 {
 	int i;
 
@@ -22,7 +21,7 @@ void ft_putstr(char *s)
 		write(1, &s[i++], 1);
 }
 
-void ft_putnbr(long n)
+void	ft_putnbr(long n)
 {
 	unsigned long	nb;
 	char			c;
@@ -30,22 +29,21 @@ void ft_putnbr(long n)
 	if (n < 0)
 	{
 		c = '-';
-		write(1, &c, 1 );
+		write(1, &c, 1);
 		nb = -n;
 	}
 	else
 		nb = n;
 	c = nb % 10 + '0';
-	if(nb >= 10)
+	if (nb >= 10)
 		ft_putnbr(nb / 10);
 	write(1, &c, 1);
 }
 
-
-int	ft_atoi(const char *str)
+int		ft_atoi(const char *str)
 {
-	int negative;
-	int number;
+	int	negative;
+	int	number;
 
 	number = 0;
 	negative = 1;

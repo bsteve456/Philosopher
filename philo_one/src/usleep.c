@@ -6,7 +6,7 @@
 /*   By: stbaleba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:21:39 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/10/26 14:15:10 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/02 15:34:23 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,18 @@
 
 void	usleep_eat(t_waiter *waiter)
 {
-//	static struct timespec req;
-//	(void)waiter;
-//	req.tv_sec = 0;
-//	req.tv_nsec = 200000000;
-//	while (utime() < (waiter->last_eat[waiter->id - 1] + waiter->teat))
-//		usleep(50);
-//		nanosleep(&req, NULL);
-		usleep(waiter->teat * 1000);
+	usleep(waiter->teat * 1000);
 }
 
 void	usleep_sleep(t_waiter *waiter)
 {
-//	static struct timespec req;
-//	(void)waiter;
-//	req.tv_sec = 0;
-//	req.tv_nsec = 200000000;
-//	while (utime() < (waiter->last_eat[waiter->id - 1] + waiter->teat + waiter->tsleep))
-//		usleep(50);
-//		nanosleep(&req, NULL);
-		usleep(waiter->tsleep * 1000);
-
+	usleep(waiter->tsleep * 1000);
 }
-
 
 void	usleep_ntime(int n)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < n)
 	{
@@ -50,7 +34,7 @@ void	usleep_ntime(int n)
 	}
 }
 
-long	utime()
+long	utime(void)
 {
 	static struct timeval time;
 

@@ -6,16 +6,16 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/02 13:51:46 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/02 15:35:01 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-pthread_mutex_t	*init_mutex(int n)
+pthread_mutex_t		*init_mutex(int n)
 {
-	pthread_mutex_t *res;
-	int i;
+	pthread_mutex_t	*res;
+	int				i;
 
 	i = 0;
 	if (n == 1)
@@ -42,7 +42,7 @@ long				**init_tab(char **av)
 	return (res);
 }
 
-t_waiter		*init_waiter(char **av, long **tab, int i, int ac)
+t_waiter			*init_waiter(char **av, long **tab, int i, int ac)
 {
 	t_waiter *waiter;
 
