@@ -1,6 +1,6 @@
 #include "philo_one.h"
 
-void	display_msg(int id, int msg, long time, t_waiter *waiter)
+void	dis_msg(int id, int msg, long time, t_waiter *waiter)
 {
 	(void)waiter;
 		if (msg == 1)
