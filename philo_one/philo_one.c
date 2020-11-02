@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_one.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/02 12:33:02 by stbaleba          #+#    #+#             */
+/*   Updated: 2020/11/02 12:42:04 by stbaleba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_one.h"
 
 void	*dinner(void *arg)
@@ -22,7 +34,7 @@ void	*dinner(void *arg)
 		usleep(1000);
 	while(1)
 	{
-		pthread_mutex_lock(&(fork[LEFT(waiter->id, waiter->nthread)]));
+		pthread_mutex_lock(&(fork[left(waiter->id, waiter->nthread)]));
 		lock_fork(waiter);
 		pthread_mutex_lock(&(fork[waiter->id - 1]));
 		lock_fork2(waiter);
