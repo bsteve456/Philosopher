@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:33:02 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/03 20:18:18 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/03 20:26:58 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void				*dinner(void *arg)
 		if (!(fork = init_fork(waiter->nthread)))
 			return (NULL);
 	}
-//	else
-//		usleep(1000);
 	think_msg(waiter);
 	if ((waiter->id) % 2 == 0)
 		usleep(100);
