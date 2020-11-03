@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/02 15:35:01 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/03 20:13:58 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,7 @@ t_waiter			*init_waiter(char **av, long **tab, int i, int ac)
 	else
 		waiter->ntoeat = -1;
 	waiter->id = (intptr_t)(i + 1);
+	waiter->second = second_fork(waiter);
+	waiter->first = first_fork(waiter);
 	return (waiter);
 }

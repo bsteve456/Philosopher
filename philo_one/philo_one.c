@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:33:02 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/02 14:25:42 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/03 20:18:18 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void				dinner_loop(t_waiter *waiter, pthread_mutex_t *fork)
 {
 	while (1)
 	{
-		pthread_mutex_lock(&(fork[left(waiter->id, waiter->nthread)]));
+		pthread_mutex_lock(&(fork[waiter->first]));
 		lock_fork(waiter);
-		pthread_mutex_lock(&(fork[waiter->id - 1]));
+		pthread_mutex_lock(&(fork[waiter->second]));
 		lock_fork2(waiter);
 		usleep_eat(waiter);
-		pthread_mutex_unlock(&(fork[waiter->id - 1]));
-		pthread_mutex_unlock(&(fork[left(waiter->id, waiter->nthread)]));
+		pthread_mutex_unlock(&(fork[waiter->second]));
+		pthread_mutex_unlock(&(fork[waiter->first]));
 		if (unlock_fork(waiter) == 1)
 			break ;
 		usleep_sleep(waiter);
@@ -43,11 +43,11 @@ void				*dinner(void *arg)
 		if (!(fork = init_fork(waiter->nthread)))
 			return (NULL);
 	}
-	else
-		usleep(1000);
+//	else
+//		usleep(1000);
 	think_msg(waiter);
 	if ((waiter->id) % 2 == 0)
-		usleep(1000);
+		usleep(100);
 	dinner_loop(waiter, fork);
 	return (NULL);
 }

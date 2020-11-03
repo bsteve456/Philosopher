@@ -6,7 +6,7 @@
 #    By: stbaleba <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/12 17:55:40 by stbaleba          #+#    #+#              #
-#    Updated: 2020/11/02 14:00:55 by stbaleba         ###   ########.fr        #
+#    Updated: 2020/11/03 20:14:38 by stbaleba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ FILES=philo_one.c \
 		src/philo_fork_state.c \
 		src/philo_utils.c \
 		src/philo_utils2.c \
-		src/unlock_lock.c \
+		src/unlock_lock.c src/left_right.c \
 		src/display.c src/send_msg.c \
 		src/usleep.c
 OBJ=$(FILES:.c=.o)

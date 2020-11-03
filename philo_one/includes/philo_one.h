@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:35:20 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/02 15:36:00 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/03 20:16:45 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ typedef struct		s_waiter
 	unsigned int		teat;
 	unsigned int		tsleep;
 	int					ntoeat;
-	long				*tdie2;
 	long				*nb_eat;
 	long				*last_eat;
 	int					id;
 	int					j;
-	int					*dead;
 	t_msg				**msg;
 	char				**tab;
+	int					first;
+	int 				second;
 	long				s;
 }					t_waiter;
 long				*ft_tdie(int nthread, long tdie);
@@ -77,5 +77,9 @@ void				init_pthread_tab(pthread_t **tid, t_msg ***tab, char *av);
 void				mring_dis(t_msg **tab, int *pos, t_waiter *waiter);
 void				think_msg(t_waiter *waiter);
 pthread_mutex_t		*init_fork(int n);
+int		first_fork(t_waiter *waiter);
+int		second_fork(t_waiter *waiter);
+
+
 
 #endif
