@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:35:20 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/03 20:16:45 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/06 16:26:29 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,12 @@ typedef struct		s_waiter
 	int					j;
 	t_msg				**msg;
 	char				**tab;
+	int 				*end;
+	int					*fork;
 	int					first;
 	int 				second;
+	long				dtime;
+	int					pdead;
 	long				s;
 }					t_waiter;
 long				*ft_tdie(int nthread, long tdie);
@@ -53,7 +57,7 @@ t_waiter			*init_waiter(char **av, long **tab, int i, int ac);
 int					ft_atoi(const char *str);
 long				utime(void);
 pthread_mutex_t		*init_mutex(int n);
-int					philo_state(t_waiter *waiter, int thread);
+int					philo_state(t_waiter *waiter);
 void				ft_putnbr(long n);
 void				ft_putstr(char *s);
 void				dis_utils(long time, int id);
@@ -74,12 +78,11 @@ void				usleep_sleep(t_waiter *waiter);
 void				usleep_ntime(int n);
 int					left(int x, int y);
 void				init_pthread_tab(pthread_t **tid, t_msg ***tab, char *av);
-void				mring_dis(t_msg **tab, int *pos, t_waiter *waiter);
+void				mring_dis(t_msg **tab, int **pos1, t_waiter *waiter);
 void				think_msg(t_waiter *waiter);
 pthread_mutex_t		*init_fork(int n);
-int		first_fork(t_waiter *waiter);
-int		second_fork(t_waiter *waiter);
-
-
+int					first_fork(t_waiter *waiter);
+int					second_fork(t_waiter *waiter);
+void				pending_msg(t_msg **tab, int *pos, t_waiter *waiter);
 
 #endif
