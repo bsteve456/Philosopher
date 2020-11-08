@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:35:20 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/06 16:26:29 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/08 13:56:28 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct		s_waiter
 	t_msg				**msg;
 	char				**tab;
 	int 				*end;
-	int					*fork;
 	int					first;
 	int 				second;
 	long				dtime;
