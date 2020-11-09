@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:33:02 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/08 14:00:00 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 15:34:43 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,18 @@ void				*dinner(void *arg)
 {
 	t_waiter				*waiter;
 	static pthread_mutex_t	*fork = 0;
-	static int i = 0;
+	static int				i = 0;
 
 	waiter = arg;
-//	if ((waiter->id) % 2 == 0)
-//		usleep(100);
 	if (i == 0)
 	{
 		i++;
 		if (!(fork = init_fork(waiter->nthread)))
 			return (NULL);
 	}
+	else
+		usleep(100);
 	think_msg(waiter);
-//	if ((waiter->id) % 2 == 0)
-//		usleep(100);
 	dinner_loop(waiter, fork);
 	return (NULL);
 }
@@ -75,7 +73,6 @@ void				monitoring_loop(t_waiter *waiter)
 		return ;
 	if (!(pos = (int *)malloc(sizeof(int) * waiter->nthread)))
 		return ;
-
 	i = 0;
 	while (i < waiter->nthread)
 	{
@@ -91,7 +88,8 @@ void				monitoring_loop(t_waiter *waiter)
 		mring_dis(tab, &pos, waiter);
 		usleep(1000);
 	}
-	pending_msg(tab, pos, waiter);
+	if(*(waiter->end) == 1)
+		pending_msg(tab, pos, waiter);
 }
 
 int					main(int ac, char **av)
@@ -101,11 +99,13 @@ int					main(int ac, char **av)
 	static int		i = 0;
 	pthread_t		*tid;
 	t_msg			**tab2;
-	int			*end;
+	long			start;
+	int				*end;
 
 	tid = NULL;
 	tab2 = NULL;
 	end = 0;
+	start = utime();
 	if (ac >= 5 && ft_atoi(av[1]) > 0)
 	{
 		if (!(end = (int *)malloc(sizeof(int) * 1)))
@@ -120,7 +120,7 @@ int					main(int ac, char **av)
 			waiter->msg = tab2;
 			waiter->j = 0;
 			waiter->end = end;
-			waiter->s = utime();
+			waiter->s = start;
 			pthread_create(&tid[i], NULL, &dinner, (void *)(waiter));
 			pthread_detach(tid[i++]);
 		}
