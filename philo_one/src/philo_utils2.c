@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 15:25:45 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/09 17:44:19 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 18:10:39 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	init_pthread_tab(char **av, t_info *info)
 	info->tab2 = tab2;
 	info->start = utime();
 	info->tab = init_tab(av);
+	if (!(info->fork = init_fork(ft_atoi(av[1]))))
+		return ;
 	*(info->end) = 0;
 }
 

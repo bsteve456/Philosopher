@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/09 16:24:34 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 18:32:02 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	pending_msg(t_msg **tab, int *pos, t_waiter *waiter)
 {
 	int end;
 
+	end = 0;
 	while (end < waiter->nthread)
 	{
 		end = 0;

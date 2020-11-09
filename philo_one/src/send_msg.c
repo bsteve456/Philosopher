@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:56:23 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/02 15:32:59 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 18:28:53 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ pthread_mutex_t		*init_fork(int n)
 {
 	pthread_mutex_t	*f;
 
-	if (!(f = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t ) * n)))
+	if (!(f = ft_calloc(sizeof(pthread_mutex_t), n)))
 		return (NULL);
 	return (f);
 }

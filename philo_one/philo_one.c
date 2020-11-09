@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:33:02 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/09 17:15:52 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 18:33:29 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,10 @@ void				dinner_loop(t_waiter *waiter, pthread_mutex_t *fork)
 void				*dinner(void *arg)
 {
 	t_waiter				*waiter;
-	static pthread_mutex_t	*fork = 0;
-	static int				i = 0;
 
 	waiter = arg;
-	if (i == 0)
-	{
-		i++;
-		if (!(fork = init_fork(waiter->nthread)))
-			return (NULL);
-	}
-	else
-		usleep(100);
 	think_msg(waiter);
-	dinner_loop(waiter, fork);
+	dinner_loop(waiter, waiter->fork);
 	return (NULL);
 }
 
@@ -110,6 +100,7 @@ int					main(int ac, char **av)
 			waiter = init_waiter(av, info->tab, i, ac);
 			waiter->last_eat[waiter->id - 1] = utime();
 			waiter->msg = info->tab2;
+			waiter->fork = info->fork;
 			waiter->end = info->end;
 			waiter->s = info->start;
 			pthread_create(&tid[i], NULL, &dinner, (void *)(waiter));

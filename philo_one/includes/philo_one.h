@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:35:20 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/09 17:44:35 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 18:14:21 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct		s_waiter
 	long				dtime;
 	int					pdead;
 	long				s;
+	pthread_mutex_t		*fork;
 }					t_waiter;
 
 typedef struct		s_info
@@ -56,6 +57,7 @@ typedef struct		s_info
 	long			**tab;
 	long			start;
 	int				*end;
+	pthread_mutex_t	*fork;
 }					t_info;
 
 long				*ft_tdie(int nthread, long tdie);
