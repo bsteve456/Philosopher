@@ -6,29 +6,11 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/09 16:05:16 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 18:51:45 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
-
-pthread_mutex_t		*init_mutex(int n)
-{
-	pthread_mutex_t	*res;
-	int				i;
-
-	i = 0;
-	if (n == 1)
-		n++;
-	if (!(res = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * n + 1)))
-		return (NULL);
-	while (i < n)
-	{
-		pthread_mutex_init(&res[i], NULL);
-		i++;
-	}
-	return (res);
-}
 
 long				**init_tab(char **av)
 {

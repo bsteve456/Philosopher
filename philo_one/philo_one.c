@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:33:02 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/09 18:33:29 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 18:51:37 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,6 @@ void				*dinner(void *arg)
 	think_msg(waiter);
 	dinner_loop(waiter, waiter->fork);
 	return (NULL);
-}
-
-pthread_mutex_t		**init_mutex_tab(char **av)
-{
-	pthread_mutex_t	**res;
-
-	if (!(res = (pthread_mutex_t **)malloc(sizeof(pthread_mutex_t *) * 2)))
-		return (NULL);
-	res[0] = init_mutex(ft_atoi(av[1]));
-	res[1] = init_mutex(1);
-	return (res);
 }
 
 void				monitoring_loop(t_waiter *waiter)

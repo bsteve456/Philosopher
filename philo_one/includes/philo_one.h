@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:35:20 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/09 18:14:21 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 18:56:30 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ long				**init_tab(char **av);
 t_waiter			*init_waiter(char **av, long **tab, int i, int ac);
 int					ft_atoi(const char *str);
 long				utime(void);
-pthread_mutex_t		*init_mutex(int n);
 int					philo_state(t_waiter *waiter);
 void				ft_putnbr(long n);
 void				ft_putstr(char *s);
