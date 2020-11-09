@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:35:20 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/08 13:56:28 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 15:32:31 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ t_msg				*fill_msg();
 void				usleep_eat(t_waiter *waiter);
 void				usleep_sleep(t_waiter *waiter);
 void				usleep_ntime(int n);
-int					left(int x, int y);
 void				init_pthread_tab(pthread_t **tid, t_msg ***tab, char *av);
 void				mring_dis(t_msg **tab, int **pos1, t_waiter *waiter);
 void				think_msg(t_waiter *waiter);
