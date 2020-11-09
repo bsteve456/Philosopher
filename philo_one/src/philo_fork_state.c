@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/05 18:41:20 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 16:24:34 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,10 @@ int		check_eat(long *time, int *i, t_waiter *waiter)
 
 int		philo_state(t_waiter *waiter)
 {
-//	static int		ndie = 0;
 	static long		n = 0;
 	static int		i = 0;
 	static long		time1 = 0;
 
-//	if (thread == 1)
-//		return (ndie);
 	if (check_eat(&time1, &i, waiter) == 1)
 		return (1);
 	while (i < waiter->nthread)
@@ -44,8 +41,7 @@ int		philo_state(t_waiter *waiter)
 			n = time1 - waiter->last_eat[i];
 			if (n >= waiter->tdie)
 			{
-//				is_dead(i + 1, time1 - waiter->s, waiter->end);
-				waiter->dtime = time1 -waiter->s;
+				waiter->dtime = time1 - waiter->s;
 				waiter->pdead = i + 1;
 				*(waiter->end) = 1;
 				return (1);
@@ -85,32 +81,12 @@ void	mring_dis(t_msg **tab, int **pos1, t_waiter *waiter)
 
 void	pending_msg(t_msg **tab, int *pos, t_waiter *waiter)
 {
-	int	i;
-	int	j;
-	int end = 0;
+	int end;
 
-	while(end < waiter->nthread)
+	while (end < waiter->nthread)
 	{
 		end = 0;
-		i = 0;
-		while (i < waiter->nthread)
-		{
-			j = pos[i];
-			if (tab[i][j].msg != 0 && tab[i][j].time != 0 && tab[i][j].time - waiter->s < waiter->dtime)
-			{
-				dis_msg(i + 1, tab[i][j].msg, tab[i][j].time - waiter->s);
-				pos[i] = j + 1;
-			}
-			else
-				end++;
-			if (pos[i] == RESET)
-			{
-				free(tab[i]);
-				tab[i] = waiter->msg[i];
-				pos[i] = 0;
-			}
-			i++;
-		}
+		pg_msg2(tab, pos, waiter, &end);
 	}
 	is_dead(waiter->pdead, waiter->dtime, waiter->end);
 }

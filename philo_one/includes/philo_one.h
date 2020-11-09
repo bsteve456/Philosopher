@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:35:20 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/09 15:54:26 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 16:23:25 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ typedef struct		s_waiter
 	int					j;
 	t_msg				**msg;
 	char				**tab;
-	int 				*end;
+	int					*end;
 	int					first;
-	int 				second;
+	int					second;
 	long				dtime;
 	int					pdead;
 	long				s;
@@ -92,5 +92,6 @@ pthread_mutex_t		*init_fork(int n);
 int					first_fork(t_waiter *waiter);
 int					second_fork(t_waiter *waiter);
 void				pending_msg(t_msg **tab, int *pos, t_waiter *waiter);
+void				pg_msg2(t_msg **tab, int *pos, t_waiter *waiter, int *end);
 
 #endif
