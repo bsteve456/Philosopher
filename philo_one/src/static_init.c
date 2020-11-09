@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 15:17:12 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/03 20:17:12 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 15:40:31 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,4 @@ long	*ft_last_eat(int nthread)
 		i++;
 	}
 	return (last_eat);
-}
-
-int		left(int x, int y)
-{
-	return (x % y);
 }

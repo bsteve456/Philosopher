@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 15:25:45 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/02 15:26:51 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 15:53:47 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,24 @@ t_msg	*fill_msg(void)
 	return (res);
 }
 
-void	init_pthread_tab(pthread_t **tid, t_msg ***tab, char *av)
+void	init_pthread_tab(char **av, t_info *info)
 {
 	int			i;
 	pthread_t	*td;
 	t_msg		**tab2;
 
 	i = 0;
-	if (!(td = (pthread_t *)malloc(sizeof(pthread_t) * ft_atoi(av) + 1)))
+	if (!(td = (pthread_t *)malloc(sizeof(pthread_t) * ft_atoi(av[1]) + 1)))
 		return ;
-	if (!(tab2 = (t_msg **)malloc(sizeof(t_msg *) * ft_atoi(av))))
+	if (!(tab2 = (t_msg **)malloc(sizeof(t_msg *) * ft_atoi(av[1]))))
 		return ;
-	while (i < ft_atoi(av))
+	if (!(info->end = (int *)malloc(sizeof(int) * 1)))
+		return ;
+	while (i < ft_atoi(av[1]))
 		tab2[i++] = fill_msg();
-	*tid = td;
-	*tab = tab2;
+	info->tid = td;
+	info->tab2 = tab2;
+	info->start = utime();
+	info->tab = init_tab(av);
+	*(info->end) = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:33:02 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/09 15:34:43 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 16:07:17 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,39 +88,30 @@ void				monitoring_loop(t_waiter *waiter)
 		mring_dis(tab, &pos, waiter);
 		usleep(1000);
 	}
-	if(*(waiter->end) == 1)
+	if (*(waiter->end) == 1)
 		pending_msg(tab, pos, waiter);
 }
 
 int					main(int ac, char **av)
 {
-	t_waiter		*waiter;
-	long			**tab;
-	static int		i = 0;
-	pthread_t		*tid;
-	t_msg			**tab2;
-	long			start;
-	int				*end;
+	t_waiter			*waiter;
+	static int			i = 0;
+	static pthread_t	*tid = NULL;
+	t_info				*info;
 
-	tid = NULL;
-	tab2 = NULL;
-	end = 0;
-	start = utime();
+	if (!(info = (t_info *)malloc(sizeof(t_info) * 1)))
+		return (0);
 	if (ac >= 5 && ft_atoi(av[1]) > 0)
 	{
-		if (!(end = (int *)malloc(sizeof(int) * 1)))
-			return (0);
-		*end = 0;
-		init_pthread_tab(&tid, &tab2, av[1]);
-		tab = init_tab(av);
+		init_pthread_tab(av, info);
+		tid = info->tid;
 		while (i < ft_atoi(av[1]))
 		{
-			waiter = init_waiter(av, tab, i, ac);
+			waiter = init_waiter(av, info->tab, i, ac);
 			waiter->last_eat[waiter->id - 1] = utime();
-			waiter->msg = tab2;
-			waiter->j = 0;
-			waiter->end = end;
-			waiter->s = start;
+			waiter->msg = info->tab2;
+			waiter->end = info->end;
+			waiter->s = info->start;
 			pthread_create(&tid[i], NULL, &dinner, (void *)(waiter));
 			pthread_detach(tid[i++]);
 		}
