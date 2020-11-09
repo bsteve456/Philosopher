@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:35:20 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/09 16:23:25 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 17:44:35 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,7 @@ int					first_fork(t_waiter *waiter);
 int					second_fork(t_waiter *waiter);
 void				pending_msg(t_msg **tab, int *pos, t_waiter *waiter);
 void				pg_msg2(t_msg **tab, int *pos, t_waiter *waiter, int *end);
+int					error_value(char **av, int ac);
+int					ft_str_is_numeric(char *str);
 
 #endif

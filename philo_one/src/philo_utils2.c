@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 15:25:45 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/09 15:53:47 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/09 17:44:19 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,17 @@ void	init_pthread_tab(char **av, t_info *info)
 	info->start = utime();
 	info->tab = init_tab(av);
 	*(info->end) = 0;
+}
+
+int		ft_str_is_numeric(char *str)
+{
+	if (*str == '\0')
+		return (1);
+	while (*str)
+	{
+		if (*str < '0' || *str > '9')
+			return (0);
+		str++;
+	}
+	return (1);
 }
