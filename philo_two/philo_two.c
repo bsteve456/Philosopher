@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:11:51 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/10 15:38:17 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/10 15:59:13 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int					main(int ac, char **av)
 
 	if (!(info = (t_info *)malloc(sizeof(t_info) * 1)))
 		return (0);
-	if (error_value(av, ac) == 1)
+	if (error_value(av, ac, info) == 1)
 	{
 		init_pthread_tab(av, info);
 		tid = info->tid;
@@ -96,7 +96,7 @@ int					main(int ac, char **av)
 			i++;
 		}
 		monitoring_loop(waiter);
+		free_info(info, waiter, tid);
 	}
-	free_info(info, waiter, tid);
 	return (0);
 }
