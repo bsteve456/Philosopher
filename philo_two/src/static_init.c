@@ -6,16 +6,16 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 15:17:12 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 18:54:33 by blacking         ###   ########.fr       */
+/*   Updated: 2020/11/10 14:14:48 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
 
-long *ft_tdie(int nthread, long tdie)
+long	*ft_tdie(int nthread, long tdie)
 {
-	long *tdie1;
-	int i;
+	long	*tdie1;
+	int		i;
 
 	if (!(tdie1 = (long *)malloc(sizeof(long) * nthread)))
 		return (0);
@@ -28,10 +28,10 @@ long *ft_tdie(int nthread, long tdie)
 	return (tdie1);
 }
 
-long *ft_nb_eat(int nthread)
+long	*ft_nb_eat(int nthread)
 {
-	long *nb_eat;
-	int i;
+	long	*nb_eat;
+	int		i;
 
 	if (!(nb_eat = (long *)malloc(sizeof(long) * nthread)))
 		return (0);
@@ -44,10 +44,10 @@ long *ft_nb_eat(int nthread)
 	return (nb_eat);
 }
 
-long *ft_last_eat(int nthread)
+long	*ft_last_eat(int nthread)
 {
-	long *last_eat;
-	int i;
+	long	*last_eat;
+	int		i;
 
 	if (!(last_eat = (long *)malloc(sizeof(long) * nthread)))
 		return (0);

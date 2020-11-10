@@ -6,71 +6,88 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 19:45:37 by blacking         ###   ########.fr       */
+/*   Updated: 2020/11/10 14:15:51 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
 
-int check_other_philo(t_waiter *waiter)
+int		check_eat(long *time, int *i, t_waiter *waiter)
 {
-	int i;
+	*time = utime();
+	*i = 0;
+	while (waiter->ntoeat != -1 &&
+	waiter->nb_eat[waiter->id - 1] >= waiter->ntoeat && *i < waiter->nthread)
+		*i += 1;
+	if (*i >= waiter->nthread)
+		return (1);
+	return (0);
+}
 
-	i = 0;
+int		philo_state(t_waiter *waiter)
+{
+	static long		n = 0;
+	static int		i = 0;
+	static long		time1 = 0;
+
+	if (check_eat(&time1, &i, waiter) == 1)
+		return (1);
 	while (i < waiter->nthread)
 	{
-		if (waiter->tdie2[i] <= 0)
-			return (1);
+		if ((waiter->ntoeat != -1 &&
+		waiter->nb_eat[waiter->id - 1] < waiter->ntoeat) ||
+		waiter->ntoeat == -1)
+		{
+			n = time1 - waiter->last_eat[i];
+			if (n >= waiter->tdie)
+			{
+				waiter->dtime = time1 - waiter->s;
+				waiter->pdead = i + 1;
+				*(waiter->end) = 1;
+				return (1);
+			}
+		}
 		i++;
 	}
 	return (0);
 }
 
-int	philo_state(t_waiter *waiter)
+void	mring_dis(t_msg **tab, int **pos1, t_waiter *waiter)
 {
-	int id;
-	static int ndie = 0;
+	int	i;
+	int	j;
+	int *pos;
 
-	id = (intptr_t)(waiter->id);
-	if (waiter->tdie2[id - 1] <= 0 && ndie == 0)
+	i = 0;
+	pos = *pos1;
+	while (i < waiter->nthread)
 	{
-		ndie++;
-		sem_wait(waiter->display);
-		display2(waiter->last_eat[id - 1], id, 5);
-		sem_post(waiter->display);
-		return (0);
+		j = pos[i];
+		if (tab[i][j].msg != 0 && tab[i][j].time != 0)
+		{
+			dis_msg(i + 1, tab[i][j].msg, tab[i][j].time - waiter->s);
+			pos[i] = j + 1;
+		}
+		if (pos[i] == RESET)
+		{
+			free(tab[i]);
+			tab[i] = waiter->msg[i];
+			pos[i] = 0;
+		}
+		i++;
 	}
-	else if (check_other_philo(waiter) == 1)
-		return (0);
-	return (1);
+	*pos1 = pos;
 }
 
-int	check_state(t_waiter *waiter, int id)
+void	pending_msg(t_msg **tab, int *pos, t_waiter *waiter)
 {
-	if (philo_state(waiter) == 0)
-		return (1);
-	else if(waiter->ntoeat != -1 && waiter->nb_eat[id - 1] == waiter->ntoeat)
-		return (1);
-	else
-		return (0);
-}
+	int end;
 
-int	check_die_eat(t_waiter *waiter, int pos)
-{
-	int id;
-	long time_m;
-
-	id = (intptr_t)(waiter->id);
-	time_m = utime();
-	waiter->tdie2[id - 1] -= (time_m - waiter->last_eat[id - 1]);
-	waiter->last_eat[id - 1] = time_m;
-	if (pos == 2 && check_state(waiter, id) == 1)
+	end = 0;
+	while (end < waiter->nthread)
 	{
-		sem_post(waiter->fork);
-		sem_post(waiter->fork);
-		return (1);
+		end = 0;
+		pg_msg2(tab, pos, waiter, &end);
 	}
-	else if (check_state(waiter, id) == 1)
-		return (1);
-	return (0);
+	is_dead(waiter->pdead, waiter->dtime, waiter->end);
 }

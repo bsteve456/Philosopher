@@ -6,36 +6,24 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 18:51:18 by blacking         ###   ########.fr       */
+/*   Updated: 2020/11/10 14:17:41 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
 
-sem_t		*init_sem(int n, char *str)
-{
-	sem_t *res;
-
-	if (n == 1 && *(str + 1) == 'f')
-		n++;
-	res = sem_open(str, O_CREAT, S_IRWXU, n);
-	return (res);
-}
-
-
-long			**init_tab(char **av)
+long				**init_tab(char **av)
 {
 	long **res;
 
-	if (!(res = (long **)malloc(sizeof(long *) * 4)))
+	if (!(res = (long **)malloc(sizeof(long *) * 2)))
 		return (0);
-	res[1] = ft_tdie(ft_atoi(av[1]), ft_atoi(av[2]));
-	res[2] = ft_nb_eat(ft_atoi(av[1]));
-	res[3] = ft_last_eat(ft_atoi(av[1]));
+	res[1] = ft_last_eat(ft_atoi(av[1]));
+	res[0] = ft_nb_eat(ft_atoi(av[1]));
 	return (res);
 }
 
-t_waiter	*init_waiter(char **av, long **tab, int i, int ac)
+t_waiter			*init_waiter(char **av, t_info *info, int i, int ac)
 {
 	t_waiter *waiter;
 
@@ -45,24 +33,20 @@ t_waiter	*init_waiter(char **av, long **tab, int i, int ac)
 	waiter->tdie = ft_atoi(av[2]);
 	waiter->teat = ft_atoi(av[3]);
 	waiter->tsleep = ft_atoi(av[4]);
-	waiter->tdie2 = tab[1];
-	waiter->nb_eat = tab[2];
-	waiter->last_eat = tab[3];
-	if(ac == 6)
+	waiter->nb_eat = info->tab[0];
+	waiter->tab = info->tab;
+	waiter->s = info->start;
+	waiter->fork = info->fork;
+	waiter->msg = info->tab2;
+	waiter->end = info->end;
+	waiter->last_eat = info->tab[1];
+	if (ac == 6)
 		waiter->ntoeat = ft_atoi(av[5]);
 	else
 		waiter->ntoeat = -1;
 	waiter->id = (intptr_t)(i + 1);
+	waiter->second = second_fork(waiter);
+	waiter->first = first_fork(waiter);
+	waiter->j = 0;
 	return (waiter);
-}
-
-long	utime()
-{
-	struct timeval time;
-	long time_m;
-
-	gettimeofday(&time, NULL);
-	time_m = (time.tv_sec) * 1000 + (time.tv_usec) / 1000;
-	return (time_m);
-
 }
