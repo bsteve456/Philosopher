@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:35:20 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/09 18:56:30 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/10 11:40:47 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct		s_waiter
 	int					id;
 	int					j;
 	t_msg				**msg;
-	char				**tab;
+	long				**tab;
 	int					*end;
 	int					first;
 	int					second;
@@ -58,13 +58,14 @@ typedef struct		s_info
 	long			start;
 	int				*end;
 	pthread_mutex_t	*fork;
+	t_waiter		**moni;
 }					t_info;
 
 long				*ft_tdie(int nthread, long tdie);
 long				*ft_nb_eat(int nthread);
 long				*ft_last_eat(int nthread);
 long				**init_tab(char **av);
-t_waiter			*init_waiter(char **av, long **tab, int i, int ac);
+t_waiter			*init_waiter(char **av, t_info *info, int i, int ac);
 int					ft_atoi(const char *str);
 long				utime(void);
 int					philo_state(t_waiter *waiter);
@@ -96,5 +97,7 @@ void				pending_msg(t_msg **tab, int *pos, t_waiter *waiter);
 void				pg_msg2(t_msg **tab, int *pos, t_waiter *waiter, int *end);
 int					error_value(char **av, int ac);
 int					ft_str_is_numeric(char *str);
+void				free_all(t_waiter *waiter, t_waiter **moni);
+void				free_info(t_info *info, t_waiter *waiter, pthread_t *tid);
 
 #endif

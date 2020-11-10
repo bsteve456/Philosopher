@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:33:02 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/09 18:51:37 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/10 11:51:28 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void				dinner_loop(t_waiter *waiter, pthread_mutex_t *fork)
 		usleep_eat(waiter);
 		pthread_mutex_unlock(&(fork[waiter->second]));
 		pthread_mutex_unlock(&(fork[waiter->first]));
-		if (unlock_fork(waiter) == 1)
+		if (*(waiter->end) != 1 && unlock_fork(waiter) == 1)
 			break ;
 		usleep_sleep(waiter);
 		think_msg(waiter);
@@ -44,20 +44,18 @@ void				*dinner(void *arg)
 
 void				monitoring_loop(t_waiter *waiter)
 {
-	t_msg	**tab;
-	int		i;
-	int		*pos;
+	t_msg			**tab;
+	static	int		i = 0;
+	int				*pos;
 
 	if (!(tab = (t_msg **)malloc(sizeof(t_msg *) * waiter->nthread)))
 		return ;
 	if (!(pos = (int *)malloc(sizeof(int) * waiter->nthread)))
 		return ;
-	i = 0;
 	while (i < waiter->nthread)
 	{
 		tab[i] = waiter->msg[i];
-		pos[i] = 0;
-		i++;
+		pos[i++] = 0;
 	}
 	usleep_ntime(20);
 	while (1)
@@ -69,6 +67,8 @@ void				monitoring_loop(t_waiter *waiter)
 	}
 	if (*(waiter->end) == 1)
 		pending_msg(tab, pos, waiter);
+	free(pos);
+	free(tab);
 }
 
 int					main(int ac, char **av)
@@ -86,16 +86,14 @@ int					main(int ac, char **av)
 		tid = info->tid;
 		while (i < ft_atoi(av[1]))
 		{
-			waiter = init_waiter(av, info->tab, i, ac);
+			waiter = init_waiter(av, info, i, ac);
 			waiter->last_eat[waiter->id - 1] = utime();
-			waiter->msg = info->tab2;
-			waiter->fork = info->fork;
-			waiter->end = info->end;
-			waiter->s = info->start;
+			info->moni[i] = waiter;
 			pthread_create(&tid[i], NULL, &dinner, (void *)(waiter));
-			pthread_detach(tid[i++]);
+			i++;
 		}
 		monitoring_loop(waiter);
 	}
+	free_info(info, waiter, tid);
 	return (0);
 }

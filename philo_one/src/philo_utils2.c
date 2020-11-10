@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 15:25:45 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/09 18:10:39 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/10 11:44:43 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,17 @@ void	init_pthread_tab(char **av, t_info *info)
 	int			i;
 	pthread_t	*td;
 	t_msg		**tab2;
+	int			n;
 
 	i = 0;
-	if (!(td = (pthread_t *)malloc(sizeof(pthread_t) * ft_atoi(av[1]) + 1)))
+	n = ft_atoi(av[1]);
+	if (!(td = (pthread_t *)malloc(sizeof(pthread_t) * (n + 1))))
 		return ;
-	if (!(tab2 = (t_msg **)malloc(sizeof(t_msg *) * ft_atoi(av[1]))))
+	if (!(tab2 = (t_msg **)malloc(sizeof(t_msg *) * n)))
 		return ;
 	if (!(info->end = (int *)malloc(sizeof(int) * 1)))
+		return ;
+	if (!(info->moni = (t_waiter **)malloc(sizeof(t_waiter *) * n)))
 		return ;
 	while (i < ft_atoi(av[1]))
 		tab2[i++] = fill_msg();
