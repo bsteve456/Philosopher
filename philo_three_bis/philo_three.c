@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 20:23:51 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/11 21:47:07 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/11 22:49:28 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,22 @@ void	dinner(int id, t_waiter *waiter, pid_t *pid)
 	pthread_create(tid, NULL, &monitor, (void *)(waiter));
 	think_msg(waiter);
 	if (id % 2 == 0)
-		usleep(2000);
+		usleep(3000);
 	while(1)
 	{
 		sem_wait(waiter->fork);
-		usleep(500);
+		usleep(100 * waiter->nthread);
 		sem_wait(waiter->fork);
 		lock_fork(waiter);
 		lock_fork2(waiter);
 		usleep_eat(waiter);
 		sem_post(waiter->fork);
+		usleep(100);
 		sem_post(waiter->fork);
 		if (waiter->end != 1 && unlock_fork(waiter) == 1)
 			break ;
-		think_msg(waiter);
 		usleep_sleep(waiter);
+		think_msg(waiter);
 		if (waiter->end == 1 || (waiter->j - waiter->i > 3))
 			break ;
 	}

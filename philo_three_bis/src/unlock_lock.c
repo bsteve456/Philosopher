@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 16:40:00 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/11 16:40:08 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/11 22:31:47 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,16 @@ int		lock_fork2(t_waiter *waiter)
 
 int		unlock_fork(t_waiter *waiter)
 {
-	waiter->last_eat = utime();
+	static long time = 0;
+
+	time = utime();
+	waiter->last_eat = time;
 	waiter->nb_eat += 1;
 	if (waiter->ntoeat != -1 &&
 	waiter->nb_eat == waiter->ntoeat)
 		return (1);
 	waiter->msg[waiter->j].msg = 4;
-	waiter->msg[waiter->j].time = utime();
+	waiter->msg[waiter->j].time = time;
 	waiter->j += 1;
 	if (waiter->j == RESET)
 	{
