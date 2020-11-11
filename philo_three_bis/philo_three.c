@@ -6,13 +6,13 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 20:23:51 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/11 17:22:17 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/11 21:47:07 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
 
-void	dinner(int id, t_waiter *waiter)
+void	dinner(int id, t_waiter *waiter, pid_t *pid)
 {
 	static int		i = 0;
 	pthread_t		*tid;
@@ -39,13 +39,16 @@ void	dinner(int id, t_waiter *waiter)
 			break ;
 		think_msg(waiter);
 		usleep_sleep(waiter);
-		if (waiter->end == 1)
+		if (waiter->end == 1 || (waiter->j - waiter->i > 3))
 			break ;
 	}
 	pthread_join(*tid, NULL);
+	sem_close(waiter->fork);
+	sem_close(waiter->display);
 	free(tid);
-	i = waiter->end * 2;
+	free(pid);
 	free(waiter->msg);
+	i = waiter->end * 2;
 	free(waiter);
 	exit(i);
 }
@@ -63,14 +66,19 @@ void	kill_process(t_waiter *waiter, pid_t *pid)
 			break;
 		i++;
 	}
-	i = 0;
+/*	i = 0;
 	while(i < waiter->nthread)
 	{
-		kill(pid[i], SIGTERM);
+		kill(pid[i], SIGQUIT);
 		i++;
-	}
+	}*/
 	sem_close(waiter->fork);
 	sem_close(waiter->display);
+//	free(waiter->fork);
+//	free(waiter->display);
+	free(pid);
+	free(waiter->msg);
+	free(waiter);
 }
 
 int main(int ac, char **av)
@@ -90,7 +98,7 @@ int main(int ac, char **av)
 		{
 			pid[i] = fork();
 			if(pid[i] == 0)
-				dinner(i + 1, waiter);
+				dinner(i + 1, waiter, pid);
 			i++;
 		}
 		kill_process(waiter, pid);

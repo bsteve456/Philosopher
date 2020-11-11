@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 16:23:40 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/11 17:16:31 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/11 21:42:03 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_waiter	*init_waiter(char **av, int ac)
 	waiter->tsleep = ft_atoi(av[4]);
 	waiter->end = 0;
 	waiter->j = 0;
+	waiter->i = 0;
 	waiter->msg = fill_msg();
 	waiter->fork = sem_open("/forks", O_CREAT, S_IRWXU, ft_atoi(av[1]));
 	waiter->display = sem_open("/display", O_CREAT, S_IRWXU, 1);

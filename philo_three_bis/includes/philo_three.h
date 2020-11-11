@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 14:52:41 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/11 16:40:49 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/11 21:41:03 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct	s_waiter
 	long				nb_eat;
 	long				last_eat;
 	long				j;
+	long				i;
 	long				s;
 	long				id;
 	int					end;

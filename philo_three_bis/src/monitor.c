@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 15:19:27 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/11 17:19:48 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/11 21:43:29 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*monitor(void *arg)
 {
 	t_waiter	*waiter;
 	t_msg		*msg;
-	int			i;
+	long			i;
 
 	waiter = arg;
 	i = 0;
@@ -31,12 +31,14 @@ void	*monitor(void *arg)
 			dis_msg(waiter->id, msg[i].msg, msg[i].time - waiter->s);
 			sem_post(waiter->display);
 			i++;
+			waiter->i += 1;
 		}
 		if (i == RESET)
 		{
 			free(msg);
 			msg = waiter->msg;
-			i = -1;
+			i = 0;
+			waiter->i = 0;
 		}
 		usleep(1000);
 	}
