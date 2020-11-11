@@ -6,7 +6,7 @@
 /*   By: stbaleba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:21:39 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/10 15:55:52 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/11 23:13:01 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		error_value(char **av, int ac, t_info *info)
 	{
 		if (!ft_str_is_numeric(av[i]) || ft_atoi(av[i]) < 0)
 		{
-			write(1, "Error: arg value.\n", 22);
+			write(1, "Error: arg value.\n", 18);
 			n = 0;
 		}
 		i++;
