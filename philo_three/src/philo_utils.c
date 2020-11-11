@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/09 16:26:27 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 17:31:00 by blacking         ###   ########.fr       */
+/*   Created: 2020/11/11 16:36:28 by stbaleba          #+#    #+#             */
+/*   Updated: 2020/11/11 16:36:33 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,40 +63,31 @@ int	ft_atoi(const char *str)
 	return (number * negative);
 }
 
-void	ft_display2(t_waiter *waiter, int n, int id)
+void	*ft_calloc(size_t count, size_t size)
 {
-	ft_putnbr(waiter->last_eat);
-	write(1, " ", 2);
-	ft_putnbr(id);
-	if (n == 1)
-		ft_putstr(" has taken a fork\n");
-	else if (n == 2)
-		ft_putstr(" is eating\n");
-	else if (n == 3)
-		ft_putstr(" is sleeping\n");
-	else if(n == 4)
-		ft_putstr(" is thinking\n");
-	else
-		ft_putstr(" died\n");
+	unsigned char *data;
+
+	if (!(data = (unsigned char *)malloc(size * count)))
+		return (NULL);
+	memset((void *)data, 0, size * count);
+	return (data);
 }
 
-void	ft_display(t_waiter *waiter, int n, int id)
+void	dis_utils(long time, int id)
 {
-	sem_wait(waiter->display);
-	usleep(100);
-	if (n == 1)
-	{
-		ft_display2(waiter, 1, id);
-		ft_display2(waiter, 1, id);
-		ft_display2(waiter, 2, id);
-	}
-	else if (n == 2)
-		ft_display2(waiter, 3, id);
-	else if(n == 4)
-		ft_display2(waiter, 4, id);
-	else
-		ft_display2(waiter, 5, id);
-	sem_post(waiter->display);
-	waiter->tdie += (utime() - waiter->last_eat);
-	waiter->last_eat = utime();
+	ft_putnbr(time);
+	write(1, " ", 2);
+	ft_putnbr(id);
+}
+
+void	dis_msg(int id, int msg, long time)
+{
+	if (msg == 1)
+		has_afork(id, time);
+	else if (msg == 2)
+		is_eating(id, time);
+	else if (msg == 4)
+		is_sleeping(id, time);
+	else if (msg == 5)
+		is_thinking(id, time);
 }

@@ -3,58 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   philo_fork_state.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/03 16:46:37 by blacking          #+#    #+#             */
-/*   Updated: 2020/06/16 17:33:26 by blacking         ###   ########.fr       */
+/*   Created: 2020/11/11 16:30:25 by stbaleba          #+#    #+#             */
+/*   Updated: 2020/11/11 17:36:24 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
 
-int	p_is_dead(t_waiter *waiter, int id)
+int		check_eat(long *time, int *i, t_waiter *waiter)
 {
-	long time_m;
-
-	time_m = utime();
-	waiter->tdie -= (time_m - waiter->last_eat);
-	waiter->last_eat = time_m;
-	if (waiter->tdie <= 0)
-	{
-		ft_display(waiter, 5, id);
+	*time = utime();
+	*i = 0;
+	while (waiter->ntoeat != -1 &&
+	waiter->nb_eat >= waiter->ntoeat && *i < waiter->nthread)
+		*i += 1;
+	if (*i >= waiter->nthread)
 		return (1);
-	}
 	return (0);
 }
 
-
-int		check_state(t_waiter *waiter, int id, int pos)
+int		philo_state(t_waiter *waiter)
 {
-	if(pos == 1)
-	{
-		if (p_is_dead(waiter, id) == 1)
-			return(1);
-		ft_display(waiter, 1, id);
-		waiter->tdie = waiter->tdie2;
-		waiter->ntoeat -= 1;
-		return (0);
-	}
-	else
-	{
-		sem_post(waiter->fork);
-		sem_post(waiter->fork);
-		if(p_is_dead(waiter, id) == 1)
-			return (1);
-		return (0);
-	}
-}
+	static long		n = 0;
+	static int		i = 0;
+	static long		time1 = 0;
 
-long	utime()
-{
-	struct timeval time;
-	long time_m;
-
-	gettimeofday(&time, NULL);
-	time_m = (time.tv_sec) * 1000 + (time.tv_usec)/1000;
-	return (time_m);
+	if (check_eat(&time1, &i, waiter) == 1)
+		return (1);
+	while (i < waiter->nthread)
+	{
+		if ((waiter->ntoeat != -1 &&
+		waiter->nb_eat < waiter->ntoeat) ||
+		waiter->ntoeat == -1)
+		{
+			n = time1 - waiter->last_eat;
+			if (n >= waiter->tdie)
+			{
+				sem_wait(waiter->display);
+				waiter->end = 1;
+				is_dead(waiter->id, time1 - waiter->s);
+			//	sem_post(waiter->display);
+				return (1);
+			}
+		}
+		i++;
+	}
+	return (0);
 }
