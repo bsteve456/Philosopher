@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 16:30:25 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/11 17:36:24 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/11 23:28:25 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int		philo_state(t_waiter *waiter)
 				sem_wait(waiter->display);
 				waiter->end = 1;
 				is_dead(waiter->id, time1 - waiter->s);
-			//	sem_post(waiter->display);
 				return (1);
 			}
 		}

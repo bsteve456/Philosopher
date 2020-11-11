@@ -6,13 +6,13 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 16:36:28 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/11 16:36:33 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/11 23:31:49 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
 
-void ft_putstr(char *s)
+void	ft_putstr(char *s)
 {
 	int i;
 
@@ -21,7 +21,7 @@ void ft_putstr(char *s)
 		write(1, &s[i++], 1);
 }
 
-void ft_putnbr(long n)
+void	ft_putnbr(long n)
 {
 	unsigned long	nb;
 	char			c;
@@ -29,18 +29,18 @@ void ft_putnbr(long n)
 	if (n < 0)
 	{
 		c = '-';
-		write(1, &c, 1 );
+		write(1, &c, 1);
 		nb = -n;
 	}
 	else
 		nb = n;
 	c = nb % 10 + '0';
-	if(nb >= 10)
+	if (nb >= 10)
 		ft_putnbr(nb / 10);
 	write(1, &c, 1);
 }
 
-int	ft_atoi(const char *str)
+int		ft_atoi(const char *str)
 {
 	int negative;
 	int number;
@@ -78,16 +78,4 @@ void	dis_utils(long time, int id)
 	ft_putnbr(time);
 	write(1, " ", 2);
 	ft_putnbr(id);
-}
-
-void	dis_msg(int id, int msg, long time)
-{
-	if (msg == 1)
-		has_afork(id, time);
-	else if (msg == 2)
-		is_eating(id, time);
-	else if (msg == 4)
-		is_sleeping(id, time);
-	else if (msg == 5)
-		is_thinking(id, time);
 }

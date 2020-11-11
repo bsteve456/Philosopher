@@ -6,13 +6,13 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 16:40:00 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/11 22:31:47 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/11 23:32:28 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
 
-void				think_msg(t_waiter *waiter)
+void	think_msg(t_waiter *waiter)
 {
 	waiter->msg[waiter->j].msg = 5;
 	waiter->msg[waiter->j].time = utime();
