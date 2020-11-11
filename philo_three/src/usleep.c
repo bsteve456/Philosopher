@@ -6,7 +6,7 @@
 /*   By: stbaleba <stbaleba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 16:43:24 by stbaleba          #+#    #+#             */
-/*   Updated: 2020/11/11 17:12:30 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/11 23:11:57 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,20 @@ long	utime(void)
 	return (time.tv_sec * 1000) + (time.tv_usec / 1000);
 }
 
-/*int		error_value(char **av, int ac, t_info *info)
+int		ft_str_is_numeric(char *str)
+{
+	if (*str == '\0')
+		return (1);
+	while (*str)
+	{
+		if (*str < '0' || *str > '9')
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+int		error_value(char **av, int ac)
 {
 	static int i = 1;
 	static int n = 1;
@@ -50,12 +63,10 @@ long	utime(void)
 	{
 		if (!ft_str_is_numeric(av[i]) || ft_atoi(av[i]) < 0)
 		{
-			write(1, "Error: arg value.\n", 22);
+			write(1, "Error: arg value.\n", 18);
 			n = 0;
 		}
 		i++;
 	}
-	if (n == 0)
-		free(info);
 	return (n);
-}*/
+}

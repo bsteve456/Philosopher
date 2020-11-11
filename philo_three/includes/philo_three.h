@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 14:52:41 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/11 21:41:03 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/11 23:08:11 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,5 @@ int			philo_state(t_waiter *waiter);
 void		dis_msg(int id, int msg, long time);
 void		dis_utils(long time, int id);
 void		ft_putstr(char *s);
-
+int			error_value(char **av, int ac);
 #endif
