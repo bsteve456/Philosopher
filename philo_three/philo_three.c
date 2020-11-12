@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 20:23:51 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/11 23:20:37 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/11/12 01:35:46 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	dinner_loop(t_waiter *waiter)
 	while (1)
 	{
 		sem_wait(waiter->fork);
+		lock_fork(waiter);
 		usleep(100 * waiter->nthread);
 		sem_wait(waiter->fork);
-		lock_fork(waiter);
 		lock_fork2(waiter);
 		usleep_eat(waiter);
 		sem_post(waiter->fork);
-		usleep(100);
+		usleep(100 * waiter->nthread);
 		sem_post(waiter->fork);
 		if (waiter->end != 1 && unlock_fork(waiter) == 1)
 			break ;
@@ -41,12 +41,12 @@ void	dinner(int id, t_waiter *waiter, pid_t *pid)
 
 	if (!(tid = (ft_calloc(sizeof(pthread_t), 1))))
 		return ;
+	if (id % 2 == 0)
+		usleep(3000);
 	waiter->id = id;
 	waiter->last_eat = utime();
 	pthread_create(tid, NULL, &monitor, (void *)(waiter));
 	think_msg(waiter);
-	if (id % 2 == 0)
-		usleep(3000);
 	dinner_loop(waiter);
 	pthread_join(*tid, NULL);
 	sem_close(waiter->fork);
