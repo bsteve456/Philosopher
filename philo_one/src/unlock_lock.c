@@ -6,7 +6,7 @@
 /*   By: blacking <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:02:58 by blacking          #+#    #+#             */
-/*   Updated: 2020/11/09 16:22:23 by stbaleba         ###   ########.fr       */
+/*   Updated: 2020/12/14 14:52:13 by stbaleba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,13 @@ int		lock_fork(t_waiter *waiter)
 
 int		lock_fork2(t_waiter *waiter)
 {
+	long time;
+
+	time = utime();
+	waiter->last_eat[waiter->id - 1] = time;
+	waiter->nb_eat[waiter->id - 1] += 1;
 	waiter->msg[waiter->id - 1][waiter->j].msg = 2;
-	waiter->msg[waiter->id - 1][waiter->j].time = utime();
+	waiter->msg[waiter->id - 1][waiter->j].time = time;
 	waiter->j += 1;
 	if (waiter->j == RESET)
 	{
@@ -40,16 +45,11 @@ int		lock_fork2(t_waiter *waiter)
 
 int		unlock_fork(t_waiter *waiter)
 {
-	long time;
-
-	time = utime();
-	waiter->last_eat[waiter->id - 1] = time;
-	waiter->nb_eat[waiter->id - 1] += 1;
 	if (waiter->ntoeat != -1 &&
 	waiter->nb_eat[waiter->id - 1] == waiter->ntoeat)
 		return (1);
 	waiter->msg[waiter->id - 1][waiter->j].msg = 4;
-	waiter->msg[waiter->id - 1][waiter->j].time = time;
+	waiter->msg[waiter->id - 1][waiter->j].time = utime();
 	waiter->j += 1;
 	if (waiter->j == RESET)
 	{
